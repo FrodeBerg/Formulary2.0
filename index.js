@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    data();
+    get_data();
 })
 
 function get_data() {
