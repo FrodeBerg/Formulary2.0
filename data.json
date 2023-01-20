@@ -1,0 +1,18 @@
+{
+    "category": [
+        {
+            "title": "Force",
+            "equations" : {
+                " F " : " M / A ",
+                " M " : " F / A "
+            }
+        }, 
+        {
+            "title": "Speed",
+            "equations" : {
+                " V " : " M * S ",
+                " S " : " M / V "
+            }
+        }
+    ]
+}
