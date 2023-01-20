@@ -25,17 +25,17 @@ function append_category(category) {
 
     // Formula and description for each equation
     category.equations.forEach(equation => {
-        console.log(equation)
         ul = document.createElement("ul");
 
         // Formula 
-        li = document.createElement("li");
-        li.innerHTML = Object.keys(equation)
-        ul.append(li)
+        formula = document.createElement("li");
+        formula.innerHTML = Object.keys(equation)
+        ul.append(formula)
 
         // Description
-        li.innerHTML = Object.values(equation)
-        ul.append(li)
+        description = document.createElement("li")
+        description.innerHTML = Object.values(equation)
+        ul.append(description)
         nav.append(ul)
     });
 }
