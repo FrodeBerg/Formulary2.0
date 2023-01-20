@@ -2,17 +2,17 @@
     "category": [
         {
             "title": "Force",
-            "equations" : {
+            "equations" : [{
                 " F = M / A" : "Force equation",
                 " M = F * A" : "Force equation"
-            }
+            }]
         }, 
         {
             "title": "Speed",
-            "equations" : {
+            "equations" : [{
                 " V " : " M * S ",
                 " S " : " M / V "
-            }
+            }]
         }
     ]
 }

@@ -7,25 +7,24 @@ function get_data() {
     .then(Response => Response.json())
     .then(data => {
         // Parse data and loop through every category
-        object = JSON.parse(data)
-        object.forEach(category => {
+        data.category.forEach(category => {
             append_category(category)
         })
     });
 }
 
 function append_category(category) {
+    console.log(category.equations)
+    // Categories tab   
+    nav = document.getElementById("categories")
 
-        // Categories tab   
-        nav = document.getElementById("categories")
+    // Title for each category 
+    h3 = document.createElement("h3");
+    h3.innerHTML = category.title;
+    nav.append(h3)
 
-        // Title for each category 
-        h3 = document.createElement("h3");
-        h3.innerHTML = category.title;
-        nav.append(h3)
-
-        // Formula and description for each equation
-        category.equations.forEach(equation => {
+    // Formula and description for each equation
+    category.equations.forEach(equation => {
         ul = document.createElement("ul");
 
         // Formula 
@@ -37,5 +36,5 @@ function append_category(category) {
         li.innerHTML = Object.values(equation)
         ul.append(li)
         nav.append(ul)
-        });
+    });
 }
