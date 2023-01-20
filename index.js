@@ -14,17 +14,18 @@ function get_data() {
 }
 
 function append_category(category) {
-    console.log(category.equations)
     // Categories tab   
     nav = document.getElementById("categories")
 
-    // Title for each category 
-    h3 = document.createElement("h3");
-    h3.innerHTML = category.title;
-    nav.append(h3)
+    // Title and hr for each category 
+    hr = document.createElement("hr")
+    h4 = document.createElement("h4");
+    h4.innerHTML = category.title;
+    nav.append(hr, h4)
 
     // Formula and description for each equation
     category.equations.forEach(equation => {
+        console.log(equation)
         ul = document.createElement("ul");
 
         // Formula 
