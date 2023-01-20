@@ -1,11 +1,44 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Formulary</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="index.js"> </script>
-  </head>
-  <body>
+    <head>
+        <title>Formulary</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="index.js"> </script>
+        <script>
+            MathJax = {
+                tex: {
+                    inlineMath: [['$', '$'], ['\\(', '\\)']]
+                },
+                svg: {
+                    fontCache: 'global'
+                },
+            };
+        </script>
+        <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+        </script>
+    </head>
 
-  </body>
+    <body>
+        <nav class="header">
+            <h3>Math</h3>
+        </nav>
+        <div class="fade"></div>
+        <main>
+            <nav>
+                <ul>
+                    <li>formula 1</li>
+                    <li>desc</li>
+                </ul>
+                <ul>
+                    <li>formula 2</li>
+                    <li>desc</li>
+                </ul>
+                <ul>
+                    <li>formula 3</li>
+                    <li>desc</li>
+                </ul>
+            </nav>
+        </main>
+    </body>
 </html>
