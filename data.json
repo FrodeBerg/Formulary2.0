@@ -3,8 +3,8 @@
         {
             "title": "Force",
             "equations" : {
-                " F " : " M / A ",
-                " M " : " F / A "
+                " F = M / A" : "Force equation",
+                " M = F * A" : "Force equation"
             }
         }, 
         {
