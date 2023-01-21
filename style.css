@@ -10,7 +10,7 @@ body {
 
 .header {
     position: fixed;
-    top: 0;
+    top: 20px;
     margin-top: 0;
     border-bottom: solid #FBFFFE 1px;
     background-color: var(--backgroundcolor);
@@ -21,16 +21,18 @@ nav {
     width: 90%;
 }
 
-h3 {
+input {
     margin-bottom: -1px;
     margin-left: 60px;
     padding: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-    width: fit-content;
+    height: 21px;
     border: solid var(--textcolor) 1px;
     border-bottom: none;
+    outline: none;
     background-color: var(--backgroundcolor);
+    color: var(--textcolor);
 }
 
 ul {
@@ -47,3 +49,4 @@ ul {
     height: 30px;
     background-color: var(--backgroundcolor);
 }
+
