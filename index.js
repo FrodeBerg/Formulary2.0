@@ -130,6 +130,11 @@ function input(text) {
     get_categories()
 }
 
-
 // Ai functions to solve formulas 
+
+
+
+// Show variables on hover 
+// Help screen 
+// 
 
