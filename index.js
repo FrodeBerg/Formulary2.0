@@ -29,38 +29,39 @@ function get_categories() {
 }
 
 function append_category(category) {
-    if (check_category(category)) {
-        // Categories tab   
-        nav = document.getElementById("categories")
-        div = document.createElement("div")
+    if (!check_category(category)) return
 
-        // Title and hr for each category 
-        hr = document.createElement("hr")
-        h4 = document.createElement("h4");
-        h4.innerHTML = category.title;
-        div.append(hr, h4)
+    // Categories tab   
+    nav = document.getElementById("categories")
+    div = document.createElement("div")
 
-        let formula_exsits = false
-        // Formula and description for each equation
-        category.equations.forEach(equation => {
-            if (check_formula(Object.keys(equation)[0])){
-                formula_exsits = true
-                ul = document.createElement("ul");
+    // Title and hr for each category 
+    hr = document.createElement("hr")
+    h4 = document.createElement("h4");
+    h4.innerHTML = category.title;
+    div.append(hr, h4)
 
-                // Formula 
-                formula = document.createElement("li");
-                formula.innerHTML = Object.keys(equation)
-                ul.append(formula)
+    let formula_exsits = false
+    // Formula and description for each equation
+    category.equations.forEach(equation => {
+        if (!check_formula(Object.keys(equation)[0])) return
 
-                // Description
-                description = document.createElement("li")
-                description.innerHTML = Object.values(equation)
-                ul.append(description)
-                div.append(ul)
-            }
-        });
-        if (formula_exsits) nav.append(div);
-    }
+        formula_exsits = true
+        ul = document.createElement("ul");
+
+        // Formula 
+        formula = document.createElement("li");
+        formula.innerHTML = Object.keys(equation)
+        ul.append(formula)
+
+        // Description
+        description = document.createElement("li")
+        description.innerHTML = Object.values(equation)
+        ul.append(description)
+        div.append(ul)
+    });
+    if (formula_exsits) nav.append(div);
+
 }
 
 // Check every category to see if it exsists in restrictions 
@@ -121,11 +122,10 @@ function input(text) {
 
     words = text.split(" ")
     words.forEach(word => {
-        if (word != "") {
-            // Words over length 2 is counted as category otherwise as variable in formula  
-            restriction = word.length > 2 ? "category" : "formula";
-            restrictions[restriction].push(word)            
-        }
+        if (word == "") return
+        // Words over length 2 is counted as category otherwise as variable in formula  
+        restriction = word.length > 2 ? "category" : "formula";
+        restrictions[restriction].push(word)            
     });
     get_categories()
 }
