@@ -49,10 +49,10 @@ function append_category(category) {
         formula_exsits = true
         ul = document.createElement("ul");
 
-        // Formula 
-        formula = document.createElement("li");
-        formula.innerHTML = Object.keys(equation)
-        ul.append(formula)
+                // Formula 
+                formula = document.createElement("li");
+                formula.innerHTML =  "\\[" + Object.keys(equation) + "\\]";
+                ul.append(formula)
 
         // Description
         description = document.createElement("li")
