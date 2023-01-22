@@ -1,17 +1,59 @@
 {
     "category": [
         {
-            "title": "Force",
+            "title": "Density",
             "equations" : [
-                {" F = M / A" : "Force equation"},
-                {" M = F * A" : "Force equation"}
+                {" ρ = kg / V " : ""}
+            ]
+        },
+        {
+            "title" : "Motion",
+            "equations" : [
+                {" v_m = Δm / Δs " : "v_m is the average velocity"},
+                {" a_m = Δv / Δs " : "a_m is the average acceleration"},
+                {" v = dm / ds " : "v is the instantaneous speed"},
+                {" a = dv / ds " : "a is the instantaneous acceleration"}
+            ]
+        },
+        {
+            "title": "Uniform Motion",
+            "equations" : [
+                {" m = v * s " : "v is constant"}
+            ]
+        },
+        {
+            "title" : "Uniformly Accelerated Motion",
+            "equations" : [
+                {" v_m = ( v_0 + v ) / 2" : "v_m is the average velocity"},
+                {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
+                {" v^2 - v_0^2 = 2 * a * m" : ""},
+                {" v = v_0 + a * s " : "v_0 is the starting velocity"},
+                {" v = a * s ": ""}
+            ]
+        },
+        {
+            "title": "Force equation",
+            "equations" : [
+                {" F = kg * a " : ""}
             ]
         }, 
         {
-            "title": "Speed",
+            "title": "Torque",
             "equations" : [
-                {" V " : " M * S "},
-                {" S " : " M / V "}
+                {" 𝜏 = F * m " : "m is the length of the moment arm"}
+            ]
+        },
+        {
+            "title" : "Friction",
+            "equations" : [
+                {" F_f = µ * F_n " : "F_f is the force at fully developed friction"},
+                {" µ = tan α": ""}
+            ]
+        },
+        {
+            "title": "Newton's law of gravitation",
+            "equations" : [
+                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
             ]
         }
     ]
