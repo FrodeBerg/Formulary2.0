@@ -9,14 +9,25 @@ let restrictions = {
 }
 
 // Original data containging all formulas and categories
-let original_data = null
+let original_data = null;
+let search_variables = [];
 
 function get_data() {
     fetch("https://frodeberg.github.io/Formulary2.0/data.json")
     .then(Response => Response.json())
     .then(data => {
-        original_data = data
-        get_categories()
+        original_data = data;
+        // Find every variable in every formula 
+        original_data.category.forEach(category => {
+            category.equations.forEach(equation => {
+                variables = Object.keys(equation)[0].split(" ")
+                variables.forEach(variable => {
+                    if (search_variables.indexOf(variable) !== -1) return;
+                    search_variables.push(variable)
+                });
+            });
+        });
+        get_categories();
     });
 }
 
@@ -137,16 +148,27 @@ function input(text) {
     restrictions["formula"] = []
     restrictions["category"] = []
 
-    words = text.split(" ")
+    text = add_spaces(text, "=");
+    text = add_spaces(text, "&")
+
+    let words = text.split(/[\s]+/)
+    console.log(words)
     words.forEach(word => {
         if (word == "") return
-        // Words over length 2 is counted as category otherwise as variable in formula  
-        restriction = word.length > 2 ? "category" : "formula";
+        // Words not in search_variables are counted as categorys 
+        restriction = search_variables.indexOf(word) === -1 ? "category" : "formula";
         restrictions[restriction].push(word)            
     });
     get_categories()
 }
 
+function add_spaces(text, char){
+    let equal = text.indexOf(char);
+    if (equal !== -1){
+        text = text.substring(0, equal) + " " + text[equal] + " " + text.substring(equal + 1, text.length);
+    } 
+    return text
+}
 // Ai functions to solve formulas 
 // Every formula is a action 
 // right side variables is starting state 
@@ -156,5 +178,3 @@ function input(text) {
 
 
 // Show variables on hover 
-// split on & = for quality of life 
-
