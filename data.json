@@ -9,7 +9,7 @@
         {
             "title" : "Motion",
             "equations" : [
-                {" v_m = Δm / Δs " : "v_m is the average velocity"},
+                {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
                 {" a_m = Δv / Δs " : "a_m is the average acceleration"},
                 {" v = dm / ds " : "v is the instantaneous speed"},
                 {" a = dv / ds " : "a is the instantaneous acceleration"}
