@@ -21,11 +21,19 @@ function get_data() {
 }
 
 function get_categories() {
-    document.getElementById("categories").innerHTML = "";
+    // Reset main page
+    let help = document.getElementById("help");
+    help.style.display = "none";
+    categories = document.getElementById("categories");
+    categories.innerHTML = "";
     // Loop through every category
     original_data.category.forEach(category => {
         append_category(category)
     });
+    if (categories.innerHTML == ""){
+        help.style.display = "block";
+    }
+
     MathJax.typeset();
 }
 
@@ -148,7 +156,5 @@ function input(text) {
 
 
 // Show variables on hover 
-// Help screen 
-// Mathjax conversion
 // split on & = for quality of life 
 
