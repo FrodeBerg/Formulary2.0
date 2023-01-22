@@ -26,6 +26,7 @@ function get_categories() {
     original_data.category.forEach(category => {
         append_category(category)
     });
+    MathJax.typeset();
 }
 
 function append_category(category) {
@@ -51,7 +52,7 @@ function append_category(category) {
 
                 // Formula 
                 formula = document.createElement("li");
-                formula.innerHTML =  "\\[" + Object.keys(equation) + "\\]";
+                formula.innerHTML =  mathjax_formula(Object.keys(equation)[0]);
                 ul.append(formula)
 
         // Description
@@ -112,6 +113,15 @@ function check_formula(formula) {
     return (reg.test(formula));
 }
 
+function mathjax_formula(formula){
+
+    formula = formula.replaceAll("*", "\\times");
+    //formula = formula.replaceAll("/", "\\over")
+
+    return "\\[" + formula + "\\]";
+}
+
+
 // Function that understands what user types in 
 function input(text) {
 
@@ -139,5 +149,6 @@ function input(text) {
 
 // Show variables on hover 
 // Help screen 
-// 
+// Mathjax conversion
+// split on & = for quality of life 
 
