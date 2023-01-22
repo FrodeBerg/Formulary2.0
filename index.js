@@ -61,7 +61,6 @@ function append_category(category) {
         div.append(ul)
     });
     if (formula_exsits) nav.append(div);
-
 }
 
 // Check every category to see if it exsists in restrictions 
@@ -131,6 +130,10 @@ function input(text) {
 }
 
 // Ai functions to solve formulas 
+// Every formula is a action 
+// right side variables is starting state 
+// Left side is winning state
+
 
 
 
