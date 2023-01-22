@@ -44,9 +44,18 @@ ul {
 
 .fade {
     position: fixed;
-    top: 52px;
+    top: 0px;
     width: 90%;
-    height: 30px;
+    height: 90px;
     background-color: var(--backgroundcolor);
 }
 
+li {
+    display: flex;
+}
+
+li * {
+    margin: 0 !important;
+    margin-right: 3px !important;
+    position: inherit !important;
+}

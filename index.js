@@ -9,23 +9,43 @@ let restrictions = {
 }
 
 // Original data containging all formulas and categories
-let original_data = null
+let original_data = null;
+let search_variables = [];
 
 function get_data() {
     fetch("https://frodeberg.github.io/Formulary2.0/data.json")
     .then(Response => Response.json())
     .then(data => {
-        original_data = data
-        get_categories()
+        original_data = data;
+        // Find every variable in every formula 
+        original_data.category.forEach(category => {
+            category.equations.forEach(equation => {
+                variables = Object.keys(equation)[0].split(" ")
+                variables.forEach(variable => {
+                    if (search_variables.indexOf(variable) !== -1) return;
+                    search_variables.push(variable)
+                });
+            });
+        });
+        get_categories();
     });
 }
 
 function get_categories() {
-    document.getElementById("categories").innerHTML = "";
+    // Reset main page
+    let help = document.getElementById("help");
+    help.style.display = "none";
+    categories = document.getElementById("categories");
+    categories.innerHTML = "";
     // Loop through every category
     original_data.category.forEach(category => {
         append_category(category)
     });
+    if (categories.innerHTML == ""){
+        help.style.display = "block";
+    }
+
+    MathJax.typeset();
 }
 
 function append_category(category) {
@@ -49,10 +69,10 @@ function append_category(category) {
         formula_exsits = true
         ul = document.createElement("ul");
 
-        // Formula 
-        formula = document.createElement("li");
-        formula.innerHTML = Object.keys(equation)
-        ul.append(formula)
+                // Formula 
+                formula = document.createElement("li");
+                formula.innerHTML =  mathjax_formula(Object.keys(equation)[0]);
+                ul.append(formula)
 
         // Description
         description = document.createElement("li")
@@ -61,7 +81,6 @@ function append_category(category) {
         div.append(ul)
     });
     if (formula_exsits) nav.append(div);
-
 }
 
 // Check every category to see if it exsists in restrictions 
@@ -113,6 +132,15 @@ function check_formula(formula) {
     return (reg.test(formula));
 }
 
+function mathjax_formula(formula){
+
+    formula = formula.replaceAll("*", "\\times");
+    //formula = formula.replaceAll("/", "\\over")
+
+    return "\\[" + formula + "\\]";
+}
+
+
 // Function that understands what user types in 
 function input(text) {
 
@@ -120,21 +148,33 @@ function input(text) {
     restrictions["formula"] = []
     restrictions["category"] = []
 
-    words = text.split(" ")
+    text = add_spaces(text, "=");
+    text = add_spaces(text, "&")
+
+    let words = text.split(/[\s]+/)
+    console.log(words)
     words.forEach(word => {
         if (word == "") return
-        // Words over length 2 is counted as category otherwise as variable in formula  
-        restriction = word.length > 2 ? "category" : "formula";
+        // Words not in search_variables are counted as categorys 
+        restriction = search_variables.indexOf(word) === -1 ? "category" : "formula";
         restrictions[restriction].push(word)            
     });
     get_categories()
 }
 
+function add_spaces(text, char){
+    let equal = text.indexOf(char);
+    if (equal !== -1){
+        text = text.substring(0, equal) + " " + text[equal] + " " + text.substring(equal + 1, text.length);
+    } 
+    return text
+}
 // Ai functions to solve formulas 
+// Every formula is a action 
+// right side variables is starting state 
+// Left side is winning state
+
 
 
 
 // Show variables on hover 
-// Help screen 
-// 
-
