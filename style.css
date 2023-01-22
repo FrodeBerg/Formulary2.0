@@ -50,3 +50,11 @@ ul {
     background-color: var(--backgroundcolor);
 }
 
+li {
+    display: flex;
+}
+
+li * {
+    margin: 0 !important;
+    margin-right: 3px !important;
+}

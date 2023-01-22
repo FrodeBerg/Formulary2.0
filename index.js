@@ -49,7 +49,7 @@ function append_category(category) {
 
                 // Formula 
                 formula = document.createElement("li");
-                formula.innerHTML = Object.keys(equation)
+                formula.innerHTML = "\\[" + Object.keys(equation) + "\\]";
                 ul.append(formula)
 
                 // Description
