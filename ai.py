@@ -2,16 +2,21 @@ import json
 import os
 
 actions = {}
+paths = {}
+
+variables = set()
 
 def main():
     with open(f'{os. getcwd()}/data.json') as f:
         data = json.load(f)
         formulas = []
-        variables = set()
+
+        # Load data 
         for equations in data["category"]:
             for equation in equations["equations"]:
                 formulas.append(list(equation.keys())[0])
 
+        # Every formula is a key for its left and right side 
         for formula in formulas:
             left, right = set(), set()
             isleft = True
@@ -26,35 +31,65 @@ def main():
                         left.add(variable)
                     else:
                         right.add(variable)
-            actions[tuple(right)] = [left, formula]
+            actions[formula] = [left, right]
 
     print(actions)
-    
-
+    i = 0
     for result in variables:
-        for variable1 in variables:
-            if variable1 == result:
+        print(i)
+        path = {}
+        for variable in variables:
+            if variable == result:
                 continue
-            for variable2 in variables:
-                # Skip when variable 1 = variable 2 or if already at result 
-                if variable2 == result or variable1 == variable2 or variable2 == result:
-                    continue
-                # Skip if path already exsits 
-                path = actions.get(tuple([variable1, variable2]))
-                if path:
-                    if result in path[0]:
-                        continue
+            path[variable] = create_key(result, [variable])
+        paths[result] = path
+        i += 1
+    with open("ai.json", "w") as outfile:
+        json.dump(paths, outfile, indent=4)
+
+# Populates dictionary with every resulting variable if no formula combination can be found 
+def create_key(result, previous_variables = [], depth = 1):
+    if depth > 3:
+        return
+    path = {}
+    for variable in variables:
+        if variable == result or variable in previous_variables:
+            continue     
+        combined_formulas = find_formula(result, previous_variables + [variable])
         
+        if len(combined_formulas) == 0:
+            path[variable] = create_key(result, previous_variables + [variable], depth + 1)
+        else:
+            path[variable] = combined_formulas
 
-                
+    return path
+
+# Recursivly go deeper until end condition is met, either result variable or no new variables can be made 
+def find_formula(result, available_variables, formulas = [], combined_formulas = []):
+
+    for formula in actions:
+        # Checks if formula can be made 
+        if all(variable in available_variables for variable in actions[formula][1]):
+            # Checks if formula results in new variables 
+            new_variables = []
+            for variable in actions[formula][0]:
+                if variable not in available_variables:
+                    new_variables.append(variable)
+            
+            if len(new_variables) == 0:
+                continue
+
+            # Checks if result can be made of new and old variables 
+            if all(variable in new_variables + available_variables for variable in result):
+                combined_formulas.append(formulas + [formula])  
+                continue   
+
+            for variable in new_variables:
+                find_formula(result, available_variables + new_variables, formulas + [formula], combined_formulas)
+
+    return combined_formulas
 
 
-    # For every end variable 
-        # For every variable pair not resulting in variable 
-            # For every variable tris not directly resulting in variables or have a pair in pairs 
-
-# Add formula variants 
-# Try every value from possible starting values to possible end values 
 
 if __name__ == "__main__":
     main()
