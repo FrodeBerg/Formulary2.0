@@ -42,10 +42,63 @@ function get_categories() {
         append_category(category)
     });
     if (categories.innerHTML == ""){
-        help.style.display = "block";
+        combined_formulas = []
+        if (restrictions["formula"].length > 0){
+            variables = get_variables(restrictions["formula"]);
+        }
+        if (variables){
+            combinations = get_combinations(variables[1])
+            combinations.forEach(combination => {
+                formula = combined_formula(variables[0], combination)
+                if (formula) combined_formulas.push(combined_formula)
+            })
+        }
+        if (combined_formulas.length == 0) help.style.display = "block";
     }
 
     MathJax.typeset();
+}
+
+// Gets left and right variables for each function
+function get_variables(variables){
+    equal = variables.indexOf("=")
+    if (equal == -1) return null
+    left = []
+    right = []
+    for (let i = 0; i < variables.length; i++){
+        if (i == "=" || i == "&") continue
+        if (i < equal){
+            left.push(variables[i]);
+        }
+        if (i > equal){
+            right.push(variables[i]);
+        }
+    }
+    if (left.length == 0 || right.length == 0) return null
+
+    return [left, right]
+}
+
+function get_combinations(variables){
+    let combinations = [];
+    let length = variables.length;
+    let combinations_length = 2 ** length;
+    for (let i = 0; i < combinations_length; i++){
+        pair = [];
+        for (let j = 0; j < length; j++){
+            if (i & 2 ** j) pair.push(variables[j]);
+        }
+
+        if (pair.length > 0) {
+            combinations.push(pair);           
+        } 
+    }
+    return combinations;
+}
+
+
+function combined_formula(left, right){
+    
 }
 
 function append_category(category) {
@@ -69,10 +122,10 @@ function append_category(category) {
         formula_exsits = true
         ul = document.createElement("ul");
 
-                // Formula 
-                formula = document.createElement("li");
-                formula.innerHTML =  mathjax_formula(Object.keys(equation)[0]);
-                ul.append(formula)
+        // Formula 
+        formula = document.createElement("li");
+        formula.innerHTML =  mathjax_formula(Object.keys(equation)[0]);
+        ul.append(formula)
 
         // Description
         description = document.createElement("li")
@@ -85,7 +138,6 @@ function append_category(category) {
 
 // Check every category to see if it exsists in restrictions 
 function check_category(category) {
-    valid = false
     if (restrictions["category"].length == 0) {
         return true
     }
@@ -93,10 +145,10 @@ function check_category(category) {
     restrictions["category"].forEach(word => {
         title = category.title.toLowerCase();
         word = word.toLowerCase();
-        if (title.includes(word)) valid = true;
+        if (title.includes(word)) return true;
     });
 
-    return valid
+    return false
 }
 
 // Check formula to see if it matches restrictions 
@@ -132,6 +184,7 @@ function check_formula(formula) {
     return (reg.test(formula));
 }
 
+// Style all functions
 function mathjax_formula(formula){
 
     formula = formula.replaceAll("*", "\\times");
@@ -152,7 +205,6 @@ function input(text) {
     text = add_spaces(text, "&")
 
     let words = text.split(/[\s]+/)
-    console.log(words)
     words.forEach(word => {
         if (word == "") return
         // Words not in search_variables are counted as categorys 
@@ -169,12 +221,6 @@ function add_spaces(text, char){
     } 
     return text
 }
-// Ai functions to solve formulas 
-// Every formula is a action 
-// right side variables is starting state 
-// Left side is winning state
-
-
 
 
 // Show variables on hover 
