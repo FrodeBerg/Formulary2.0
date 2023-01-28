@@ -217,37 +217,51 @@ function check_category(category) {
     return false
 }
 
-// Check formula to see if it matches restrictions 
+// Check formula to see if it matches restrictions using regex 
 function check_formula(formula) {
     let reg = "";
-    let restriction = restrictions["formula"]
-    let i = 0
-    while (i < restriction.length){
-        // If and skip
-        if (restriction[i] == "&"){
-            i++;
-            continue;
-        }
-        // If equal add and skip
-        reg += ".*"
-        if (restriction[i] == "="){
-            i++;
-            reg += "=";
-            continue;
-        }
+    let restriction = restrictions["formula"];
+    
+    // Check if user typed somthing
+    if (restriction.length !== 0){
+        let equal = restriction.indexOf("=");
 
-        // For every consecutive variable add a "|" between and enclose in "()"
-        reg += "(" + restriction[i];
-        while (restriction[i + 1] != "=" && restriction[i + 1] != "&" && i + 1 < restriction.length){
-            reg += "|" + restriction[i+1]
-            i++;            
+        // if equals sign, split into left and right and add to regex
+        if (equal == -1){
+            reg = get_permutations(restriction.slice()).join("|").toString();
         }
-        reg += ")";
-        i++;
+        else{
+
+            let left = get_permutations(restriction.slice(0, equal));
+            if (left) left = "(" + left.join("|").toString() + ")";
+            else left = "";
+            let right = get_permutations(restriction.slice(equal + 1));
+            if (right) right = "(" + right.join("|").toString() + ")";
+            else right = "";
+            
+            reg = `${left}=${right}`
+        }
     }
 
     reg = new RegExp(reg);
     return (reg.test(formula));
+}
+
+function get_permutations(aviable_variables, str = "", permutations = []){
+    let variable_length = aviable_variables.length;
+    // Check if end condition
+    if (variable_length == 0){
+        permutations.push("(" + str + ")");
+        return
+    }
+
+    // Loop through all variables 
+    for (let i = 0; i < variable_length; i++){
+        new_variables = aviable_variables.slice();
+        new_variables.splice(i, 1)
+        get_permutations(new_variables, (str + `.*${aviable_variables.slice(i, i + 1)}.*`), permutations)
+    }
+    return permutations
 }
 
 // Style all functions
@@ -268,7 +282,6 @@ function input(text) {
     restrictions["category"] = []
 
     text = add_spaces(text, "=");
-    text = add_spaces(text, "&")
 
     let words = text.split(/[\s]+/)
     words.forEach(word => {
