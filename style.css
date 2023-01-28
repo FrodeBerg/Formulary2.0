@@ -67,3 +67,7 @@ li * {
     margin-right: 3px !important;
     position: inherit !important;
 }
+
+h3 * {
+    position: inherit !important;
+}
