@@ -58,13 +58,16 @@ def get_variables(formula):
     for variable in formula.split(" "):
         if variable in ["="]:
             isleft = False
-        if variable not in ["","=", " ", "/", "(", ")", "^", "*", "+", "-", "_", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
-            if "^" in variable:
-                variable = variable[0: variable.find("^")]
-            if isleft:
-                left.add(variable)
-            else:
-                right.add(variable)
+        if variable in ["","=", " ", "/", "(", ")", "^", "*", "+", "-", "_", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
+            continue
+        if "_" in variable:
+            continue
+        if "^" in variable:
+            variable = variable[0: variable.find("^")]
+        if isleft:
+            left.add(variable)
+        else:
+            right.add(variable)
     return (left, right)
 
 
@@ -114,15 +117,13 @@ def find_formula(result, available_variables, formulas = []):
                 continue
 
             if (formulas + [formula]) in combined_formula:
-                    continue
+                continue
             # Checks if result can be made of new and old variables and dosent already exsits
             if all(variable in new_variables for variable in [result]):
-                if (formulas + [formula]) in combined_formula:
-                    continue
                 current_formula = formula
                 for previous_formula in formulas[-1::-1]:
-                    # If previous result is not in current using break
-                    if not any(left in get_variables(current_formula)[1] for left in get_variables(previous_formula)[0]):
+                    # If previous result is not in current 
+                    if not all(left in get_variables(current_formula)[1] for left in get_variables(previous_formula)[0]):
                         break
                     current_formula = previous_formula
                 else:

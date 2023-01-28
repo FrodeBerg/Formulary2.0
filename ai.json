@@ -1,0 +1,271 @@
+{
+    "F": {
+        "a,kg": [
+            [
+                " F = kg * a "
+            ]
+        ],
+        "G,kg,m": [
+            [
+                " F = G * ( kg * kg ) / m^2 "
+            ]
+        ],
+        "ds,dv,kg": [
+            [
+                " a = dv / ds ",
+                " F = kg * a "
+            ]
+        ],
+        "G,kg,s,v": [
+            [
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 "
+            ]
+        ],
+        "G,dm,ds,kg,s": [
+            [
+                " v = dm / ds ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 "
+            ]
+        ]
+    },
+    "a": {
+        "ds,dv": [
+            [
+                " a = dv / ds "
+            ]
+        ]
+    },
+    "m": {
+        "a,s": [
+            [
+                " m = v_0 * s + ( a * s^2 ) / 2 "
+            ],
+            [
+                " v = v_0 + a * s ",
+                " m = v * s "
+            ],
+            [
+                " v = a * s ",
+                " m = v * s "
+            ]
+        ],
+        "s,v": [
+            [
+                " m = v * s "
+            ]
+        ],
+        "dm,ds,s": [
+            [
+                " v = dm / ds ",
+                " m = v * s "
+            ]
+        ],
+        "ds,dv,s": [
+            [
+                " a = dv / ds ",
+                " m = v_0 * s + ( a * s^2 ) / 2 "
+            ],
+            [
+                " a = dv / ds ",
+                " v = v_0 + a * s ",
+                " m = v * s "
+            ],
+            [
+                " a = dv / ds ",
+                " v = a * s ",
+                " m = v * s "
+            ]
+        ]
+    },
+    "v": {
+        "a,m": [
+            [
+                " v^2 - v_0^2 = 2 * a * m"
+            ]
+        ],
+        "a,s": [
+            [
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " v^2 - v_0^2 = 2 * a * m"
+            ],
+            [
+                " v = v_0 + a * s "
+            ],
+            [
+                " v = a * s "
+            ]
+        ],
+        "dm,ds": [
+            [
+                " v = dm / ds "
+            ]
+        ],
+        "ds,dv,m": [
+            [
+                " a = dv / ds ",
+                " v^2 - v_0^2 = 2 * a * m"
+            ]
+        ],
+        "ds,dv,s": [
+            [
+                " a = dv / ds ",
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " v^2 - v_0^2 = 2 * a * m"
+            ],
+            [
+                " a = dv / ds ",
+                " v = v_0 + a * s "
+            ],
+            [
+                " a = dv / ds ",
+                " v = a * s "
+            ]
+        ]
+    },
+    "\u00b5": {
+        "tan,\u03b1": [
+            [
+                " \u00b5 = tan \u03b1"
+            ]
+        ]
+    },
+    "\u03c1": {
+        "V,kg": [
+            [
+                " \u03c1 = kg / V "
+            ]
+        ]
+    },
+    "\ud835\udf0f": {
+        "F,m": [
+            [
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "F,a,s": [
+            [
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " v = v_0 + a * s ",
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " v = a * s ",
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "F,s,v": [
+            [
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "G,kg,m": [
+            [
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "a,kg,m": [
+            [
+                " F = kg * a ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "F,dm,ds,s": [
+            [
+                " v = dm / ds ",
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "F,ds,dv,s": [
+            [
+                " a = dv / ds ",
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " a = dv / ds ",
+                " v = v_0 + a * s ",
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " a = dv / ds ",
+                " v = a * s ",
+                " m = v * s ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "G,a,kg,s": [
+            [
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " v = v_0 + a * s ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " v = a * s ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "G,kg,s,v": [
+            [
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "ds,dv,kg,m": [
+            [
+                " a = dv / ds ",
+                " F = kg * a ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "G,dm,ds,kg,s": [
+            [
+                " v = dm / ds ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ]
+        ],
+        "G,ds,dv,kg,s": [
+            [
+                " a = dv / ds ",
+                " m = v_0 * s + ( a * s^2 ) / 2 ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " a = dv / ds ",
+                " v = v_0 + a * s ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ],
+            [
+                " a = dv / ds ",
+                " v = a * s ",
+                " m = v * s ",
+                " F = G * ( kg * kg ) / m^2 ",
+                " \ud835\udf0f = F * m "
+            ]
+        ]
+    }
+}
