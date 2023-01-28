@@ -60,6 +60,7 @@ h3 {
 li {
     display: flex;
     max-width: 40%;
+    margin: 3px;
 }
 
 li * {
@@ -70,4 +71,8 @@ li * {
 
 h3 * {
     position: inherit !important;
+}
+
+.description_ul {
+    justify-content: center;
 }
