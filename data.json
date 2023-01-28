@@ -3,16 +3,16 @@
         {
             "title": "Density",
             "equations" : [
-                {" ρ = kg / V " : ""}
+                {" ρ = { kg / V }" : ""}
             ]
         },
         {
             "title" : "Motion",
             "equations" : [
-                {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
-                {" a_m = Δv / Δs " : "\\[ a_m \\] is the average acceleration"},
-                {" v = dm / ds " : "\\[ v \\] is the instantaneous speed"},
-                {" a = dv / ds " : "\\[ a \\] is the instantaneous acceleration"}
+                {" v_m = { Δm / Δs } " : " \\[ v_m \\] is the average velocity"},
+                {" a_m = { Δv / Δs } " : "\\[ a_m \\] is the average acceleration"},
+                {" v = { dm / ds } " : "\\[ v \\] is the instantaneous speed"},
+                {" a = { dv / ds } " : "\\[ a \\] is the instantaneous acceleration"}
             ]
         },
         {
@@ -24,8 +24,8 @@
         {
             "title" : "Uniformly Accelerated Motion",
             "equations" : [
-                {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
-                {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
+                {" v_m = { ( v_0 + v ) / 2 } " : "\\[ v_m \\] is the average velocity"},
+                {" m = v_0 * s + { ( a * s^2 ) / 2 }": ""},
                 {" v^2 - v_0^2 = 2 * a * m " : ""},
                 {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
                 {" v = a * s ": ""}
@@ -53,7 +53,7 @@
         {
             "title": "Newton's law of gravitation",
             "equations" : [
-                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
+                {" F = G * { ( kg * kg ) / m^2 } ": "Each kg is the mass of each object, m is the distance between them"}
             ]
         }
     ]

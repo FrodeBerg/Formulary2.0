@@ -122,12 +122,16 @@ function combined_formula(left, right){
     if (!ai_data[left].hasOwnProperty(key)) return false
 
     nav = document.getElementById("categories")
-    div = document.createElement("div")
 
-    combined = null;
-    i = 1;
     // Loop through each formula for given key 
-    ai_data[left][right][0].slice().reverse().forEach(formula => {
+    ai_data[left][right].forEach(equation => {
+
+        div = document.createElement("div")
+
+        combined = null;
+        i = 1;
+
+        equation.slice().reverse().forEach(formula => {
         
         // Add each formula and description to ul
         ul = document.createElement("ul");
@@ -146,14 +150,16 @@ function combined_formula(left, right){
         }
         else combined = formula;
         i++;
+        })
+
+        // Append combined formula
+        h3 = document.createElement("h3");
+        h3.innerHTML = mathjax_formula(combined);
+        hr = document.createElement("hr")
+        div.prepend(hr, h3)
+        nav.append(div)
     })
 
-    // Append combined formula
-    h3 = document.createElement("h3");
-    h3.innerHTML = mathjax_formula(combined);
-    hr = document.createElement("hr")
-    div.prepend(hr, h3)
-    nav.append(div)
 
     return true
 }
@@ -248,7 +254,7 @@ function check_formula(formula) {
 function mathjax_formula(formula){
 
     formula = formula.replaceAll("*", "\\times");
-    //formula = formula.replaceAll("/", "\\over")
+    formula = formula.replaceAll("/", "\\over")
 
     return "\\[" + formula + "\\]";
 }
