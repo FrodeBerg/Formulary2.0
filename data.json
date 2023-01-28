@@ -24,9 +24,9 @@
         {
             "title" : "Uniformly Accelerated Motion",
             "equations" : [
-                {" v_m = ( v_0 + v ) / 2" : "\\[ v_m \\] is the average velocity"},
+                {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
                 {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
-                {" v^2 - v_0^2 = 2 * a * m" : ""},
+                {" v^2 - v_0^2 = 2 * a * m " : ""},
                 {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
                 {" v = a * s ": ""}
             ]
@@ -47,7 +47,7 @@
             "title" : "Friction",
             "equations" : [
                 {" F_f = µ * F_n " : "\\[ F_f \\] is the force at fully developed friction"},
-                {" µ = tan α": ""}
+                {" µ = tan α ": ""}
             ]
         },
         {
