@@ -17,6 +17,7 @@ let descriptions = {};
 let ai_data = null;
 let search_variables = [];
 
+
 function get_data() {
     fetch("https://frodeberg.github.io/Formulary2.0/ai.json")
     .then(Response => Response.json())
@@ -40,6 +41,7 @@ function get_data() {
         get_categories();
     });
 }
+
 
 function get_categories() {
     // Reset main page
@@ -70,6 +72,7 @@ function get_categories() {
     MathJax.typeset();
 }
 
+
 // Gets left and right variables for each function
 function get_variables(variables){
 
@@ -92,6 +95,7 @@ function get_variables(variables){
     return [left, right]
 }
 
+
 // Returns all combinations of how variables can be combined
 function get_combinations(variables){
 
@@ -112,6 +116,7 @@ function get_combinations(variables){
     }
     return combinations;
 }
+
 
 // Combined formulas and adds them to DOM 
 function combined_formula(left, right){
@@ -159,12 +164,11 @@ function combined_formula(left, right){
         div.prepend(hr, h3)
         nav.append(div)
     })
-
-
     return true
 }
 
 
+// Adds each category 
 function append_category(category) {
 
     if (!check_category(category)) return
@@ -202,6 +206,7 @@ function append_category(category) {
     if (formula_exsits) nav.append(div);
 }
 
+
 // Check every category to see if it exsists in restrictions 
 function check_category(category) {
 
@@ -218,6 +223,7 @@ function check_category(category) {
     return exsists
 }
 
+
 // Check formula to see if it matches restrictions using regex 
 function check_formula(formula) {
     let reg = "";
@@ -232,6 +238,7 @@ function check_formula(formula) {
         }
         else{
 
+            // Makes regex order insensetive before and after "=" sign
             let left = get_permutations(restriction.slice(0, equal));
             if (left) left = "(" + left.join("|").toString() + ")";
             else left = "";
@@ -246,6 +253,8 @@ function check_formula(formula) {
     return (reg.test(formula));
 }
 
+
+// All permutations of an array 
 function get_permutations(aviable_variables, str = "", permutations = []){
     let variable_length = aviable_variables.length;
     // Check if end condition
@@ -262,6 +271,7 @@ function get_permutations(aviable_variables, str = "", permutations = []){
     }
     return permutations
 }
+
 
 // Style all functions
 function mathjax_formula(formula){
@@ -300,6 +310,7 @@ function input(text) {
     get_categories()
 }
 
+
 // Add spaces to prevent bugs if user didnt put spaces 
 function add_spaces(text, char){
     let equal = text.indexOf(char);
@@ -308,6 +319,3 @@ function add_spaces(text, char){
     } 
     return text
 }
-
-
-// Show variables on hover 
