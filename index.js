@@ -242,7 +242,6 @@ function check_formula(formula) {
             reg = `${left}=${right}`
         }
     }
-
     reg = new RegExp(reg);
     return (reg.test(formula));
 }
@@ -290,6 +289,14 @@ function input(text) {
         restriction = search_variables.indexOf(word) === -1 ? "category" : "formula";
         restrictions[restriction].push(word)            
     });
+
+    // Display what user typed in after classification
+    let variables = document.getElementById("search_variables");
+    let categories = document.getElementById("search_categories");
+
+    variables.innerHTML = "Searching for variables: " + restrictions["formula"].join(" ");
+    categories.innerHTML = "Searching for categories: " + restrictions["category"].join(" ");
+
     get_categories()
 }
 
@@ -304,4 +311,3 @@ function add_spaces(text, char){
 
 
 // Show variables on hover 
-// Show active formulas and category

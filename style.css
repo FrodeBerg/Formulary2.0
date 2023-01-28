@@ -76,3 +76,7 @@ h3 * {
 .description_ul {
     justify-content: center;
 }
+
+#categories {
+    margin-top: 15px;
+}
