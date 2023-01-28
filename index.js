@@ -285,3 +285,4 @@ function add_spaces(text, char){
 
 
 // Show variables on hover 
+// Show active formulas and category
