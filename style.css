@@ -59,6 +59,7 @@ h3 {
 
 li {
     display: flex;
+    max-width: 40%;
 }
 
 li * {
