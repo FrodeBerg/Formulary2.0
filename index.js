@@ -168,7 +168,7 @@ function combined_formula(left, right){
 function append_category(category) {
 
     if (!check_category(category)) return
-
+    
     // Categories tab   
     nav = document.getElementById("categories")
     div = document.createElement("div")
@@ -204,24 +204,24 @@ function append_category(category) {
 
 // Check every category to see if it exsists in restrictions 
 function check_category(category) {
+
+    let exsists = false
     if (restrictions["category"].length == 0) {
         return true
     }
-
     restrictions["category"].forEach(word => {
         title = category.title.toLowerCase();
         word = word.toLowerCase();
-        if (title.includes(word)) return true;
+        if (title.includes(word)) exsists = true;
     });
 
-    return false
+    return exsists
 }
 
 // Check formula to see if it matches restrictions using regex 
 function check_formula(formula) {
     let reg = "";
     let restriction = restrictions["formula"];
-    
     // Check if user typed somthing
     if (restriction.length !== 0){
         let equal = restriction.indexOf("=");
