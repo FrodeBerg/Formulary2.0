@@ -58,10 +58,10 @@ def main():
 def convert_formula(formula, explored = []):
 
     # Recursivley go over every operation if it results in a new formula continue 
-    operations = [swap, arithmetic_swap, multiplicational_swap]
+    operations = [swap, operation_swap, multiplicational_swap]
     # Position of equals sign 
     equals = formula.find("=")
-    print(arithmetic_swap(formula, equals, "+"))
+    print(operation_swap(formula, equals, "/"))
     # For formula in explode 
         # If left variables > 1 discard 
     return explored
@@ -96,13 +96,13 @@ def alternate(sub_string):
         new_string += char
     return new_string
 
-# Swap arethmetically
-def arithmetic_swap(formula, equals, operator):
+# Swap based on operation
+def operation_swap(formula, equals, operator):
 
     right_side = formula[equals + 1:]
     operation = right_side.find(operator)
     
-    # Return if + and - sign inside parentheses 
+    # check if inside parentheses 
     if parentheses(right_side):
         operation = between(operation, *parentheses(right_side))
 
@@ -110,16 +110,23 @@ def arithmetic_swap(formula, equals, operator):
     if operation < 0:
         return formula
     
-    return formula[:equals] + alternate(operator) + alternate(right_side[operation + 1:]) + "=" + right_side[:operation]
+    if operator in ["-", "+"]:
+        return formula[:equals] + alternate(operator) + alternate(right_side[operation + 1:]) + "=" + right_side[:operation]
+
+    # Swap arethmetically
+    return multiplicational_swap(formula, equals, right_side, operator, operation)
 
 
 # Multiplicational swap 
-def multiplicational_swap(formula, equals, operator):
+def multiplicational_swap(formula, equals, right_side, operator, operation):
 
-    
-    return formula
-
-
+    if operator == "/":
+        right_side = right_side.replace("{", "").replace("}", "")
+        operation = right_side.find("/")
+        operator = "*"
+        return formula[:equals] + operator + right_side[operation + 1:] + "=" + right_side[:operation]
+    operator = "/"
+    return "{" + formula[:equals] + operator + right_side[operation + 1:] + "}" + "=" + right_side[:operation]
 
 # Return left, right variables given a formula 
 def get_variables(formula):
