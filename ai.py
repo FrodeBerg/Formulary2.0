@@ -1,6 +1,7 @@
 import json
 import os
 from itertools import combinations
+import re
 
 actions = {}
 paths = {}
@@ -23,7 +24,10 @@ def main():
         # Load data 
         for equations in data["category"]:
             for equation in equations["equations"]:
-                formulas.append(list(equation.keys())[0])
+                formula = list(equation.keys())[0]
+                formulas.append(formula)
+                convert_formula(formula)
+
 
         # Every formula is a key for its left and right side 
         for formula in formulas:
@@ -34,8 +38,7 @@ def main():
                 using_variables.add(variable)
             actions[formula] = variables
 
-    print(actions)
-
+    return
     result_variables = sorted(list(result_variables))
     using_variables = sorted(list(using_variables))
     j = 0
@@ -50,6 +53,79 @@ def main():
 
     with open("ai.json", "w") as outfile:
         json.dump(paths, outfile, indent=4)
+
+# Takes one formula and returns a list of equivalent formulas
+def convert_formula(formula, explored = []):
+
+    # Recursivley go over every operation if it results in a new formula continue 
+    operations = [swap, add_to_sub, mul_to_div]
+    # Position of equals sign 
+    equals = formula.find("=")
+    print(add_to_sub(formula, equals))
+    # For formula in explode 
+        # If left variables > 1 discard 
+    return explored
+
+# Swaps left and right side of formula
+def swap(formula, equals):
+    return formula[equals + 1:] + "=" + formula[:equals]
+
+# Swap + and -
+def add_to_sub(formula, equals):
+
+    right_side = formula[equals + 1:]
+    add = right_side.find("+")
+    sub = right_side.find("-")
+    
+    # Return if no + or - sign
+    if add + sub < -1:
+        return formula
+    
+    def parentheses(string):
+        start = string.find("(")
+        if start:
+            end = string.rfind(")")
+            if end: 
+                return (start, end)
+        return None
+
+    # Return if + or - sign inside parentheses 
+    if parentheses(right_side):
+        start, end = parentheses(right_side)
+        between = lambda x: -1 if x > start and x < end else x
+        add = between(add)
+        sub = between(sub)
+
+        if add + sub < - 1:
+            return formula
+
+    # Swaps + and -, unless they are sorrunded by parentheses 
+    def replace(sub_string):
+        new_string = ""
+        for index, char in enumerate(sub_string):
+            if not (index >= parentheses(sub_string)[0] and index <= parentheses(sub_string)[1]):
+                if char == "+":
+                    new_string += "-"
+                    continue
+                if char == "-":
+                    new_string += "+"
+                    continue
+            new_string += char
+        return new_string
+
+    # Swap, prioritze nearest to equals sign  
+    if sub >= 0:
+        if add < sub and add >= 0:
+            return f"{formula[:equals]}-{replace(right_side[add + 1:])}={right_side[:add]}"
+        return f"{formula[:equals]}+{replace(right_side[sub + 1:])}={right_side[:sub]}"
+    return f"{formula[:equals]}-{replace(right_side[add + 1:])}={right_side[:add]}"
+
+
+# Swap * and / 
+def mul_to_div(formula, equals):
+    return formula
+
+
 
 # Return left, right variables given a formula 
 def get_variables(formula):
