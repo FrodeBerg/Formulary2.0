@@ -58,10 +58,10 @@ def main():
 def convert_formula(formula, explored = []):
 
     # Recursivley go over every operation if it results in a new formula continue 
-    operations = [swap, add_to_sub, mul_to_div]
+    operations = [swap, arithmetic_swap, multiplicational_swap]
     # Position of equals sign 
     equals = formula.find("=")
-    print(add_to_sub(formula, equals))
+    print(arithmetic_swap(formula, equals, "+"))
     # For formula in explode 
         # If left variables > 1 discard 
     return explored
@@ -70,59 +70,53 @@ def convert_formula(formula, explored = []):
 def swap(formula, equals):
     return formula[equals + 1:] + "=" + formula[:equals]
 
-# Swap + and -
-def add_to_sub(formula, equals):
+# Returns start and end of parentheses or none 
+def parentheses(string):
+    start = string.find("(")
+    if start:
+        end = string.rfind(")")
+        if end: 
+            return (start, end)
+    return None
+
+# Returns 0 if x is between start and end 
+between = lambda x, start, end: -1 if x > start and x < end else x
+
+# Swaps + and -, unless they are sorrunded by parentheses 
+def alternate(sub_string):
+    new_string = ""
+    for index, char in enumerate(sub_string):
+        if not (index >= parentheses(sub_string)[0] and index <= parentheses(sub_string)[1]):
+            if char == "+":
+                new_string += "-"
+                continue
+            if char == "-":
+                new_string += "+"
+                continue
+        new_string += char
+    return new_string
+
+# Swap arethmetically
+def arithmetic_swap(formula, equals, operator):
 
     right_side = formula[equals + 1:]
-    add = right_side.find("+")
-    sub = right_side.find("-")
+    operation = right_side.find(operator)
     
-    # Return if no + or - sign
-    if add + sub < -1:
+    # Return if + and - sign inside parentheses 
+    if parentheses(right_side):
+        operation = between(operation, *parentheses(right_side))
+
+     # Return if no + or - sign
+    if operation < 0:
         return formula
     
-    def parentheses(string):
-        start = string.find("(")
-        if start:
-            end = string.rfind(")")
-            if end: 
-                return (start, end)
-        return None
-
-    # Return if + or - sign inside parentheses 
-    if parentheses(right_side):
-        start, end = parentheses(right_side)
-        between = lambda x: -1 if x > start and x < end else x
-        add = between(add)
-        sub = between(sub)
-
-        if add + sub < - 1:
-            return formula
-
-    # Swaps + and -, unless they are sorrunded by parentheses 
-    def replace(sub_string):
-        new_string = ""
-        for index, char in enumerate(sub_string):
-            if not (index >= parentheses(sub_string)[0] and index <= parentheses(sub_string)[1]):
-                if char == "+":
-                    new_string += "-"
-                    continue
-                if char == "-":
-                    new_string += "+"
-                    continue
-            new_string += char
-        return new_string
-
-    # Swap, prioritze nearest to equals sign  
-    if sub >= 0:
-        if add < sub and add >= 0:
-            return f"{formula[:equals]}-{replace(right_side[add + 1:])}={right_side[:add]}"
-        return f"{formula[:equals]}+{replace(right_side[sub + 1:])}={right_side[:sub]}"
-    return f"{formula[:equals]}-{replace(right_side[add + 1:])}={right_side[:add]}"
+    return formula[:equals] + alternate(operator) + alternate(right_side[operation + 1:]) + "=" + right_side[:operation]
 
 
-# Swap * and / 
-def mul_to_div(formula, equals):
+# Multiplicational swap 
+def multiplicational_swap(formula, equals, operator):
+
+    
     return formula
 
 
