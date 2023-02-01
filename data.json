@@ -2,18 +2,12 @@
     "category": [
         {
             "title": "Density",
-            "siequations" : [
-                {" ρ = kg / V " : ""}
-            ],
             "equations" : [
-
+                {" ρ = kg / V " : ""}
             ]
         },
         {
             "title" : "Motion",
-            "siequations" : [
-
-            ],
             "equations" : [
                 {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
                 {" a_m = Δv / Δs " : "\\[ a_m \\] is the average acceleration"},
@@ -23,45 +17,34 @@
         },
         {
             "title": "Uniform Motion",
-            "siequations" : [
+            "equations" : [
                 {" m = v * s " : "\\[ v \\] is constant"}
             ]
         },
         {
             "title" : "Uniformly Accelerated Motion",
-            "siequations" : [
-                {" v = a * s ": ""}
-            ],
             "equations" : [
                 {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
                 {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
                 {" v^2 - v_0^2 = 2 * a * m " : ""},
-                {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"}
+                {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
+                {" v = a * s ": ""}
             ]
         },
         {
             "title": "Force equation",
-            "siequations" : [
-                {" F = kg * a " : ""}
-            ],
             "equations" : [
-                
+                {" F = kg * a " : ""}
             ]
         }, 
         {
             "title": "Torque",
-            "siequations" : [
-                {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
-            ],
             "equations" : [
-                
+                {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
             ]
         },
         {
             "title" : "Friction",
-            "siequations" : [
-                
-            ],
             "equations" : [
                 {" F_f = µ * F_n " : "\\[ F_f \\] is the force at fully developed friction"},
                 {" µ = tan (α) ": ""}
@@ -69,11 +52,8 @@
         },
         {
             "title": "Newton's law of gravitation",
-            "siequations" : [
-                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
-            ],
             "equations" : [
-                
+                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
             ]
         }
     ]

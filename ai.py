@@ -17,18 +17,17 @@ def main():
     global result_variables
     global using_variables
 
-    with open(f'{os. getcwd()}/data.json') as f:
+    with open(f'{os. getcwd()}/aidata.json') as f:
         data = json.load(f)
         formulas = []
 
         # Load data 
-        for equations in data["category"]:
-            for equation in equations["siequations"]:
-                formula = list(equation.keys())[0]
-                formulas.append(formula)
-                for new_formula in exclude_formula(convert_formula(formula, [])):
-                    if new_formula not in formulas:
-                        formulas.append(new_formula)
+        for equation in data["category"]:
+            formula = list(equation.keys())[0]
+            formulas.append(formula)
+            for new_formula in exclude_formula(convert_formula(formula, [])):
+                if new_formula not in formulas:
+                    formulas.append(new_formula)
 
         # Every formula is a key for its left and right side 
         for formula in formulas:

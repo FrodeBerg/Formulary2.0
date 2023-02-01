@@ -1,0 +1,11 @@
+{
+    "category" : [
+        {" ρ = kg / V " : ""},
+        {" m = v * s " : "\\[ v \\] is constant"}, 
+        {" v = a * s ": ""},
+        {" F = kg * a " : ""},
+        {" F = kg * a " : ""},
+        {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"},
+        {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}        
+    ]
+}
