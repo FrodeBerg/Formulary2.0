@@ -23,7 +23,7 @@ def main():
 
         # Load data 
         for equations in data["category"]:
-            for equation in equations["si-equations"]:
+            for equation in equations["siequations"]:
                 formula = list(equation.keys())[0]
                 formulas.append(formula)
                 for new_formula in exclude_formula(convert_formula(formula, [])):

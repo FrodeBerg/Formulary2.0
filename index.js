@@ -30,7 +30,8 @@ function get_data() {
         original_data = data;
         // Find every variable in every formula 
         original_data.category.forEach(category => {
-            category.equations.forEach(equation => {
+            let combined_category = category.equations.concat(category.siequations)
+            combined_category.forEach(equation => {
                 variables = Object.keys(equation)[0].split(" ")
                 variables.forEach(variable => {
                     if (search_variables.indexOf(variable) !== -1) return;
@@ -184,7 +185,7 @@ function append_category(category) {
     div.append(hr, h4)
 
     let formula_exsits = false
-    let combined_category = category.equations.concat(category["si-equations"]) 
+    let combined_category = category.equations.concat(category.siequations) 
     // Formula and description for each equation and si-equation
     combined_category.forEach(equation => {
         if (!check_formula(Object.keys(equation)[0])) return

@@ -2,7 +2,7 @@
     "category": [
         {
             "title": "Density",
-            "si-equations" : [
+            "siequations" : [
                 {" ρ = kg / V " : ""}
             ],
             "equations" : [
@@ -11,7 +11,7 @@
         },
         {
             "title" : "Motion",
-            "si-equations" : [
+            "siequations" : [
 
             ],
             "equations" : [
@@ -23,13 +23,13 @@
         },
         {
             "title": "Uniform Motion",
-            "si-equations" : [
+            "siequations" : [
                 {" m = v * s " : "\\[ v \\] is constant"}
             ]
         },
         {
             "title" : "Uniformly Accelerated Motion",
-            "si-equations" : [
+            "siequations" : [
                 {" v = a * s ": ""}
             ],
             "equations" : [
@@ -41,7 +41,7 @@
         },
         {
             "title": "Force equation",
-            "si-equations" : [
+            "siequations" : [
                 {" F = kg * a " : ""}
             ],
             "equations" : [
@@ -50,7 +50,7 @@
         }, 
         {
             "title": "Torque",
-            "si-equations" : [
+            "siequations" : [
                 {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
             ],
             "equations" : [
@@ -59,7 +59,7 @@
         },
         {
             "title" : "Friction",
-            "si-equations" : [
+            "siequations" : [
                 
             ],
             "equations" : [
@@ -69,7 +69,7 @@
         },
         {
             "title": "Newton's law of gravitation",
-            "si-equations" : [
+            "siequations" : [
                 {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
             ],
             "equations" : [
