@@ -280,7 +280,7 @@ function get_permutations(aviable_variables, str = "", permutations = []){
 function mathjax_formula(formula){
 
     formula = formula.replaceAll("*", "\\times");
-    formula = formula.replaceAll("/", "\\over")
+    //formula = formula.replaceAll("/", "\\over")
 
     return "\\[" + formula + "\\]";
 }
