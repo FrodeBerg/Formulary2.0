@@ -26,37 +26,40 @@
             <input type="text" autofocus oninput="input(this.value)">
         </nav>
         <main>
-            <nav id="helpers">
+            <nav id="helpers" class="header" style="top: 52px;">
                 <p id="search_variables">Searching for variables: </p>
                 <p id="search_categories">Searching for categories: </p>
             </nav>
             <nav id="categories">
     
             </nav>
-            <div id="help">
-                <h3>No formulas or categories found</h3>
-                <hr>
-                <p>Leave epmty to show all formulas</p>
-                <hr>
-                <p>Write a category to show only that category</p>
-                <hr>
-                <p>Write a variable to show every formula containing that variable (F):</p>
-                <ul class="description_ul">
-                    <li>$$F = kg \times a $$</li>
-                    <li> $$𝜏 = F \times m $$</li>
-                </ul>
-                <hr>
-                <p>Put a "=" to the right of a variable to show all formulas resulting in that variable (F =):</p>
-                <ul class="description_ul">
-                    <li>$$F = kg \times a $$</li>
-                </ul>
-                <p>Put a "=" to the left of a variable to show all formulas using that variable (= F):</p>
-                <ul class="description_ul">
-                    <li> $$𝜏 = F \times m $$</li>
-                </ul>
-                <hr>
-                <p>Write varaibles on both sides of "=" to get exact or combined formulas if none can be found. Try (m = dv ds s)</p>
-            </div>
+            <nav id="help">
+                <div>
+                    <hr>
+                    <h3>No formulas or categories found</h3>
+                    <hr>
+                    <p>Leave epmty to show all formulas</p>
+                    <hr>
+                    <p>Write a category to show only that category</p>
+                    <hr>
+                    <p>Write a variable to show every formula containing that variable (F):</p>
+                    <ul class="description_ul">
+                        <li>$$F = kg \times a $$</li>
+                        <li> $$𝜏 = F \times m $$</li>
+                    </ul>
+                    <hr>
+                    <p>Put a "=" to the right of a variable to show all formulas resulting in that variable (F =):</p>
+                    <ul class="description_ul">
+                        <li>$$F = kg \times a $$</li>
+                    </ul>
+                    <p>Put a "=" to the left of a variable to show all formulas using that variable (= F):</p>
+                    <ul class="description_ul">
+                        <li> $$𝜏 = F \times m $$</li>
+                    </ul>
+                    <hr>
+                    <p>Write varaibles on both sides of "=" to get exact or combined formulas if none can be found. Try (m = dv ds s)</p>
+                </div>
+            </nav>
         </main>
     </body>
 </html>

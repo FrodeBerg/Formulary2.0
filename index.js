@@ -270,7 +270,7 @@ function get_permutations(aviable_variables, str = "", permutations = []){
     for (let i = 0; i < variable_length; i++){
         new_variables = aviable_variables.slice();
         new_variables.splice(i, 1)
-        get_permutations(new_variables, (`${str}.*${aviable_variables.slice(i, i + 1)}.*`), permutations)
+        get_permutations(new_variables, (`${str}.*[${aviable_variables.slice(i, i + 1)}].*`), permutations)
     }
     return permutations
 }

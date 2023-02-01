@@ -17,7 +17,7 @@ body {
 }
 
 nav {
-    margin-top: 90px;
+    margin-top: 130px;
     margin-left: 5px;
     width: 90%;
 }
@@ -75,8 +75,4 @@ h3 * {
 
 .description_ul {
     justify-content: center;
-}
-
-#categories {
-    margin-top: 15px;
 }

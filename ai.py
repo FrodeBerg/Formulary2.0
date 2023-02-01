@@ -1,7 +1,6 @@
 import json
 import os
 from itertools import combinations
-import re
 
 actions = {}
 paths = {}
