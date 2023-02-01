@@ -184,8 +184,9 @@ function append_category(category) {
     div.append(hr, h4)
 
     let formula_exsits = false
-    // Formula and description for each equation
-    category.equations.forEach(equation => {
+    let combined_category = category.equations.concat(category["si-equations"]) 
+    // Formula and description for each equation and si-equation
+    combined_category.forEach(equation => {
         if (!check_formula(Object.keys(equation)[0])) return
 
         formula_exsits = true
