@@ -29,6 +29,7 @@ def main():
                 if new_formula not in formulas:
                     formulas.append(new_formula)
 
+        print(formulas)
         # Every formula is a key for its left and right side 
         for formula in formulas:
             variables = get_variables(formula)
@@ -69,7 +70,14 @@ def convert_formula(formula, explored = [], new_formulas = []):
     # Position of equals sign 
     equals = formula.find("=")
     operation = lambda char: operation_swap(formula, equals, char)
-    operations = [swap(formula, equals), operation("+"), operation("-"), operation("*"), operation("/")]
+    operations = [
+        swap(formula, equals), 
+        operation("+"), 
+        operation("-"), 
+        operation("*"), 
+        operation("/"),
+        divisional_swap(formula, equals)
+        ]
 
     for func in operations:
         left, right = get_variables(func)
@@ -84,6 +92,15 @@ def convert_formula(formula, explored = [], new_formulas = []):
 # Swaps left and right side of formula
 def swap(formula, equals):
     return formula[equals + 1:] + "=" + formula[:equals]
+
+# Swap left side of equation to after divisor
+def divisional_swap(formula, equals):
+    right_side = formula[equals+1:]
+    div = right_side.find("/")
+    if div == -1:
+        return formula
+    
+    return f"{right_side[div+1:]} = {formula[:equals]} / {right_side[:div]}"
 
 # Returns start and end of parentheses or none 
 def parentheses(string):
@@ -140,9 +157,8 @@ def multiplicational_swap(formula, equals, right_side, operator, operation):
 
     if operator == "/":
         operator = "*"
-        return f" {right_side[operation + 1:].strip()} {operator} {formula[:equals].strip()} = {right_side[:operation].strip()} "
-
-    operator = "/"
+    else:
+        operator = "/"
     return f" {formula[:equals].strip()} {operator} {right_side[operation + 1:].strip()} = {right_side[:operation].strip()} "
 
 
