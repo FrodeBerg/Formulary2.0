@@ -5,7 +5,7 @@ import re
 
 actions = {}
 paths = {}
-n = 4
+n = 3
 
 result_variables = set()
 using_variables = set()
@@ -23,11 +23,12 @@ def main():
 
         # Load data 
         for equations in data["category"]:
-            for equation in equations["equations"]:
+            for equation in equations["si-equations"]:
                 formula = list(equation.keys())[0]
                 formulas.append(formula)
-                convert_formula(formula)
-
+                for new_formula in exclude_formula(convert_formula(formula, [])):
+                    if new_formula not in formulas:
+                        formulas.append(new_formula)
 
         # Every formula is a key for its left and right side 
         for formula in formulas:
@@ -38,7 +39,7 @@ def main():
                 using_variables.add(variable)
             actions[formula] = variables
 
-    return
+
     result_variables = sorted(list(result_variables))
     using_variables = sorted(list(using_variables))
     j = 0
@@ -54,17 +55,32 @@ def main():
     with open("ai.json", "w") as outfile:
         json.dump(paths, outfile, indent=4)
 
-# Takes one formula and returns a list of equivalent formulas
-def convert_formula(formula, explored = []):
 
-    # Recursivley go over every operation if it results in a new formula continue 
-    operations = [swap, operation_swap, multiplicational_swap]
+# Exclude formulas with more than one left side varaible 
+def exclude_formula(formulas):
+    new_list = []
+    for formula in formulas:
+        if len(get_variables(formula)[0]) <= 1:
+            new_list.append(formula)
+    return new_list
+
+# Takes one formula and returns a list of equivalent formulas
+def convert_formula(formula, explored = [], new_formulas = []):
+
     # Position of equals sign 
     equals = formula.find("=")
-    print(operation_swap(formula, equals, "/"))
-    # For formula in explode 
-        # If left variables > 1 discard 
-    return explored
+    operation = lambda char: operation_swap(formula, equals, char)
+    operations = [swap(formula, equals), operation("+"), operation("-"), operation("*"), operation("/")]
+
+    for func in operations:
+        left, right = get_variables(func)
+        left, right = sorted(list(left)), sorted(list(right))
+        if (left, right) not in explored:
+            explored.append((left, right))
+            new_formulas.append(func)
+            convert_formula(func, explored)
+
+    return new_formulas
 
 # Swaps left and right side of formula
 def swap(formula, equals):
@@ -79,7 +95,7 @@ def parentheses(string):
             return (start, end)
     return None
 
-# Returns 0 if x is between start and end 
+# Returns -1 if x is between start and end 
 between = lambda x, start, end: -1 if x > start and x < end else x
 
 # Swaps + and -, unless they are sorrunded by parentheses 
@@ -111,22 +127,25 @@ def operation_swap(formula, equals, operator):
         return formula
     
     if operator in ["-", "+"]:
-        return formula[:equals] + alternate(operator) + alternate(right_side[operation + 1:]) + "=" + right_side[:operation]
+        return f" {formula[:equals].strip()} {alternate(operator)} {alternate(right_side[operation + 1:]).strip()} = {right_side[:operation].strip()} "
 
     # Swap arethmetically
     return multiplicational_swap(formula, equals, right_side, operator, operation)
 
-
 # Multiplicational swap 
 def multiplicational_swap(formula, equals, right_side, operator, operation):
 
+    # Return if + or - not inside parentheses 
+    if between(right_side.find("+"), *parentheses(right_side)) != -1 or between(right_side.find("-"), *parentheses(right_side)) != -1:
+        return formula
+
     if operator == "/":
-        right_side = right_side.replace("{", "").replace("}", "")
-        operation = right_side.find("/")
         operator = "*"
-        return formula[:equals] + operator + right_side[operation + 1:] + "=" + right_side[:operation]
+        return f" {right_side[operation + 1:].strip()} {operator} {formula[:equals].strip()} = {right_side[:operation].strip()} "
+
     operator = "/"
-    return "{" + formula[:equals] + operator + right_side[operation + 1:] + "}" + "=" + right_side[:operation]
+    return f" {formula[:equals].strip()} {operator} {right_side[operation + 1:].strip()} = {right_side[:operation].strip()} "
+
 
 # Return left, right variables given a formula 
 def get_variables(formula):
@@ -136,8 +155,6 @@ def get_variables(formula):
         if variable in ["="]:
             isleft = False
         if variable in ["","=", " ", "/", "(", ")", "{", "}", "^", "*", "+", "-", "_", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
-            continue
-        if "_" in variable:
             continue
         if "^" in variable:
             variable = variable[0: variable.find("^")]
@@ -161,7 +178,6 @@ def key_variables(result, n):
             combined_formulas[",".join(variables)] = combined_formula.copy()
             pairs.add(",".join(variables))
             combined_formula.clear()
-
     return combined_formulas
 
 
@@ -202,8 +218,7 @@ def find_formula(result, available_variables, formulas = []):
                         break
                     current_formula = previous_formula
                 else: 
-                    if len(formulas) > 0:
-                        combined_formula.append(formulas + [formula])
+                    combined_formula.append(formulas + [formula])
                 continue
 
             for variable in new_variables:

@@ -2,58 +2,78 @@
     "category": [
         {
             "title": "Density",
+            "si-equations" : [
+                {" ρ = kg / V " : ""}
+            ],
             "equations" : [
-                {" ρ = { kg / V }" : ""}
+
             ]
         },
         {
             "title" : "Motion",
+            "si-equations" : [
+
+            ],
             "equations" : [
-                {" v_m = { Δm / Δs } " : " \\[ v_m \\] is the average velocity"},
-                {" a_m = { Δv / Δs } " : "\\[ a_m \\] is the average acceleration"},
-                {" v = { dm / ds } " : "\\[ v \\] is the instantaneous speed"},
-                {" a = { dv / ds } " : "\\[ a \\] is the instantaneous acceleration"}
+                {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
+                {" a_m = Δv / Δs " : "\\[ a_m \\] is the average acceleration"},
+                {" v = dm / ds " : "\\[ v \\] is the instantaneous speed"},
+                {" a = dv / ds " : "\\[ a \\] is the instantaneous acceleration"}
             ]
         },
         {
             "title": "Uniform Motion",
-            "equations" : [
+            "si-equations" : [
                 {" m = v * s " : "\\[ v \\] is constant"}
             ]
         },
         {
             "title" : "Uniformly Accelerated Motion",
-            "equations" : [
-                {" v_m = { ( v_0 + v ) / 2 } " : "\\[ v_m \\] is the average velocity"},
-                {" m = v_0 * s + { ( a * s^2 ) / 2 }": ""},
-                {" v^2 - v_0^2 = 2 * a * m " : ""},
-                {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
+            "si-equations" : [
                 {" v = a * s ": ""}
+            ],
+            "equations" : [
+                {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
+                {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
+                {" v^2 - v_0^2 = 2 * a * m " : ""},
+                {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"}
             ]
         },
         {
             "title": "Force equation",
-            "equations" : [
+            "si-equations" : [
                 {" F = kg * a " : ""}
+            ],
+            "equations" : [
+                
             ]
         }, 
         {
             "title": "Torque",
-            "equations" : [
+            "si-equations" : [
                 {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
+            ],
+            "equations" : [
+                
             ]
         },
         {
             "title" : "Friction",
+            "si-equations" : [
+                
+            ],
             "equations" : [
                 {" F_f = µ * F_n " : "\\[ F_f \\] is the force at fully developed friction"},
-                {" µ = tan α ": ""}
+                {" µ = tan (α) ": ""}
             ]
         },
         {
             "title": "Newton's law of gravitation",
+            "si-equations" : [
+                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
+            ],
             "equations" : [
-                {" F = G * { ( kg * kg ) / m^2 } ": "Each kg is the mass of each object, m is the distance between them"}
+                
             ]
         }
     ]
