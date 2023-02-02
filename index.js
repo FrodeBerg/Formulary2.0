@@ -138,26 +138,27 @@ function combined_formula(left, right){
 
         equation.slice().reverse().forEach(formula => {
         
-        // Add each formula and description to ul
-        ul = document.createElement("ul");
-        li = document.createElement("li");
-        li.innerHTML = mathjax_formula(formula);
-        li.style.marginLeft = `${i * right_shift}px` 
-        description = document.createElement("li");
-        description.innerHTML = "";
-        if (descriptions.hasOwnProperty(formula)){
-            description.innerHTML = descriptions[formula];
-        }
-        ul.append(li, description);
-        div.append(ul);
+            // Add each formula and description to ul
+            ul = document.createElement("ul");
+            li = document.createElement("li");
+            li.innerHTML = mathjax_formula(formula);
+            li.style.marginLeft = `${i * right_shift}px` 
+            description = document.createElement("li");
+            description.innerHTML = "";
+            if (descriptions.hasOwnProperty(formula)){
+                description.innerHTML = descriptions[formula];
+            }
+            ul.append(li, description);
+            div.append(ul);
 
-        // Combined formula
-        if (combined){
-            equal = formula.indexOf("=");
-            combined = combined.replace(formula.slice(0, equal).replace(/\s/g, ''), "(" + formula.slice(equal + 1) + ")")
-        }
-        else combined = formula;
-        i++;
+            // Combined formula
+            if (combined){
+                equal = formula.indexOf("=");
+                combined = combined.replace(formula.slice(0, equal).replace(/\s/g, ''), "(" + formula.slice(equal + 1) + ")")
+            }
+            else combined = formula;
+            i++;
+            console.log(combined)
         })
 
         // Append combined formula
