@@ -54,11 +54,13 @@ function get_categories() {
         append_category(category)
     });
     if (categories.innerHTML == ""){
+        let variables = null;
         if (restrictions["formula"].length > 0){
             variables = get_variables(restrictions["formula"]);
         }
         // Try and find combined formula for each combination
         successful = false
+        console.log(variables)
         if (variables){
             combinations = get_combinations(variables[1])
             combinations.forEach(combination => {
