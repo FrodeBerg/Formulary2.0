@@ -16,19 +16,20 @@ def main():
     global result_variables
     global using_variables
 
-    with open(f'{os. getcwd()}/aidata.json') as f:
+    with open(f'{os. getcwd()}/data.json') as f:
         data = json.load(f)
         formulas = []
 
         # Load data 
-        for equation in data["category"]:
-            formula = list(equation.keys())[0]
-            formulas.append(formula)
-            for new_formula in exclude_formula(convert_formula(formula, [])):
-                if new_formula not in formulas:
-                    formulas.append(new_formula)
+        for category in data["category"]:
+            for equation in category["equations"]:
+                formula = list(equation.keys())[0]
+                formulas.append(formula)
+                for new_formula in convert_formula(formula, []):
+                    if new_formula not in formulas:
+                        formulas.append(new_formula)
+        formulas = exclude_formula(formulas)
 
-        print(formulas)
         # Every formula is a key for its left and right side 
         for formula in formulas:
             variables = get_variables(formula)
@@ -59,7 +60,7 @@ def main():
 def exclude_formula(formulas):
     new_list = []
     for formula in formulas:
-        if len(get_variables(formula)[0]) <= 1:
+        if len(get_variables(formula)[0]) == 1:
             new_list.append(formula)
     return new_list
 
