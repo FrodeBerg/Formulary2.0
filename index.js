@@ -60,7 +60,7 @@ function get_categories() {
         }
         // Try and find combined formula for each combination
         successful = false
-        console.log(variables)
+
         if (variables){
             combinations = get_combinations(variables[1])
             combinations.forEach(combination => {
@@ -70,8 +70,6 @@ function get_categories() {
         if (!successful) help.style.display = "block";
     }
     
-
-    MathJax.typeset();
 }
 
 
@@ -160,7 +158,6 @@ function combined_formula(left, right){
             }
             else combined = formula;
             i++;
-            console.log(combined)
         })
 
         // Append combined formula
@@ -344,6 +341,7 @@ function input(text) {
     categories.innerHTML = "Searching for categories: " + restrictions["category"].join(" ");
 
     get_categories()
+    MathJax.typeset();
 }
 
 
