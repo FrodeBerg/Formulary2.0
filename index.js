@@ -140,26 +140,27 @@ function combined_formula(left, right){
 
         equation.slice().reverse().forEach(formula => {
         
-        // Add each formula and description to ul
-        ul = document.createElement("ul");
-        li = document.createElement("li");
-        li.innerHTML = mathjax_formula(formula);
-        li.style.marginLeft = `${i * right_shift}px` 
-        description = document.createElement("li");
-        description.innerHTML = "";
-        if (descriptions.hasOwnProperty(formula)){
-            description.innerHTML = descriptions[formula];
-        }
-        ul.append(li, description);
-        div.append(ul);
+            // Add each formula and description to ul
+            ul = document.createElement("ul");
+            li = document.createElement("li");
+            li.innerHTML = mathjax_formula(formula);
+            li.style.marginLeft = `${i * right_shift}px` 
+            description = document.createElement("li");
+            description.innerHTML = "";
+            if (descriptions.hasOwnProperty(formula)){
+                description.innerHTML = descriptions[formula];
+            }
+            ul.append(li, description);
+            div.append(ul);
 
-        // Combined formula
-        if (combined){
-            equal = formula.indexOf("=");
-            combined = combined.replace(formula.slice(0, equal).replace(/\s/g, ''), "(" + formula.slice(equal + 1) + ")")
-        }
-        else combined = formula;
-        i++;
+            // Combined formula
+            if (combined){
+                equal = formula.indexOf("=");
+                combined = combined.replace(formula.slice(0, equal).replace(/\s/g, ''), "(" + formula.slice(equal + 1) + ")")
+            }
+            else combined = formula;
+            i++;
+            console.log(combined)
         })
 
         // Append combined formula
@@ -282,11 +283,41 @@ function get_permutations(aviable_variables, str = "", permutations = []){
 function mathjax_formula(formula){
 
     formula = formula.replaceAll("*", "\\times");
-    //formula = formula.replaceAll("/", "\\over")
+
+    // Loop through all "/"
+    let index = 0
+    let div = formula.indexOf("/", index);
+    while (div >= 0){
+
+        // Loop going forward in string
+        let i = find_braces(formula, div, 1);
+        formula = formula.slice(0, div + i) + " }" + formula.slice(div + i);
+
+        // Loop going backward in string
+        i = find_braces(formula, div, -1);
+        formula = formula.slice(0, div + i + 1) + "{ " + formula.slice(div + i + 1);
+
+        // Take the two added characters before the "/" into account 
+        index = div + 2;
+        div = formula.indexOf("/", index + 1);
+    }
+
+    formula = formula.replaceAll("/", "\\over");
 
     return "\\[" + formula + "\\]";
 }
 
+// Find position for curly braces, parentheses taken into account 
+function find_braces(formula, div, direction){
+    let parentheses = 0
+    let i = 2 * direction;
+    while (!(formula[div + i] == " " && formula[div + i - 1 * direction] != " " && !parentheses)){
+        if (formula[div + i] == "(") parentheses += 1 * direction;
+        if (formula[div + i] == ")") parentheses += -1 * direction;
+        i += 1 * direction;
+    }
+    return i
+}
 
 // Function that understands what user types in 
 function input(text) {
