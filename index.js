@@ -164,6 +164,7 @@ function combined_formula(left, right){
         h3 = document.createElement("h3");
         h3.innerHTML = mathjax_formula(combined);
         hr = document.createElement("hr")
+        if (i <= 2) div.innerHTML = "";
         div.prepend(hr, h3)
         nav.append(div)
     })
