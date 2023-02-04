@@ -21,7 +21,7 @@ def main():
         formulas = []
 
         # Load data 
-        for category in data["category"]:
+        for category in data["category"]["formulas"]:
             for equation in category["equations"]:
                 formula = list(equation.keys())[0]
                 formulas.append(formula)
