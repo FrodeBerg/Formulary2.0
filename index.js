@@ -50,8 +50,10 @@ function get_categories() {
     categories = document.getElementById("categories");
     categories.innerHTML = "";
     // Loop through every category
-    original_data.category.forEach(category => {
-        append_category(category)
+    Object.values(original_data.category).forEach(category => {
+        category.forEach(equation => {
+            append_category(equation)
+        })
     });
     if (categories.innerHTML == ""){
         let variables = null;
@@ -299,9 +301,7 @@ function mathjax_formula(formula){
         index = div + 2;
         div = formula.indexOf("/", index + 1);
     }
-
     formula = formula.replaceAll("/", "\\over");
-
     return "\\[" + formula + "\\]";
 }
 

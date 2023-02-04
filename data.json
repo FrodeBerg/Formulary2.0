@@ -78,7 +78,7 @@
                     "equations" : [
                         {" Hz = 1 / s " : "hertz = frequency"},
                         {" rad = m / m " : "radian = angle"},
-                        {" sr = m^2/m^2 " : "steradian = solid angle"},
+                        {" sr = m^2 / m^2 " : "steradian = solid angle"},
                         {" N = kg * m / s^2 " : "newton = force, wheight"},
                         {" Pa = N / m^2 " : "pascal = pressure, stress"},
                         {" J = m * N " : "joule = energy, work, heat"},
