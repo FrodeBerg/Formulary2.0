@@ -29,7 +29,7 @@ function get_data() {
     .then(data => {
         original_data = data;
         // Find every variable in every formula 
-        original_data.category.forEach(category => {
+        original_data.category.formulas.forEach(category => {
             category.equations.forEach(equation => {
                 variables = Object.keys(equation)[0].split(" ")
                 variables.forEach(variable => {

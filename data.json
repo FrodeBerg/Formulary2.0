@@ -1,71 +1,92 @@
 {
     "category": [
         {
-            "title": "Density",
-            "equations" : [
-                {" ρ = kg / V " : ""}
-            ]
-        },
-        {
-            "title" : "Motion",
-            "equations" : [
-                {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
-                {" a_m = Δv / Δs " : "\\[ a_m \\] is the average acceleration"},
-                {" v = dm / ds " : "\\[ v \\] is the instantaneous speed"},
-                {" a = dv / ds " : "\\[ a \\] is the instantaneous acceleration"}
-            ]
-        },
-        {
-            "title": "Uniform Motion",
-            "equations" : [
-                {" m = v * s " : "\\[ v \\] is constant"}
-            ]
-        },
-        {
-            "title" : "Uniformly Accelerated Motion",
-            "equations" : [
-                {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
-                {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
-                {" v^2 - v_0^2 = 2 * a * m " : ""},
-                {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
-                {" v = a * s ": ""}
-            ]
-        },
-        {
-            "title": "Force equation",
-            "equations" : [
-                {" F = kg * a " : ""}
-            ]
-        }, 
-        {
-            "title": "Torque",
-            "equations" : [
-                {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
-            ]
-        },
-        {
-            "title" : "Friction",
-            "equations" : [
-                {" F_f = µ * F_n " : "\\[ F_f \\] is the force at fully developed friction"},
-                {" µ = tan (α) ": ""}
-            ]
-        },
-        {
-            "title": "Newton's law of gravitation",
-            "equations" : [
-                {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
-            ]
-        },
-        {
-            "title" : "Variables",
-            "equations" : [
-
-            ]
-        }, 
-        {
-            "title" : "Constants",
-            "equations" : [
-                
+            "formulas" : [
+                {
+                    "title": "Density",
+                    "equations" : [
+                        {" ρ = kg / V " : ""}
+                    ]
+                },
+                {
+                    "title" : "Motion",
+                    "equations" : [
+                        {" v_m = Δm / Δs " : " \\[ v_m \\] is the average velocity"},
+                        {" a_m = Δv / Δs " : "\\[ a_m \\] is the average acceleration"},
+                        {" v = dm / ds " : "\\[ v \\] is the instantaneous speed"},
+                        {" a = dv / ds " : "\\[ a \\] is the instantaneous acceleration"}
+                    ]
+                },
+                {
+                    "title": "Uniform Motion",
+                    "equations" : [
+                        {" m = v * s " : "\\[ v \\] is constant"}
+                    ]
+                },
+                {
+                    "title" : "Uniformly Accelerated Motion",
+                    "equations" : [
+                        {" v_m = ( v_0 + v ) / 2 " : "\\[ v_m \\] is the average velocity"},
+                        {" m = v_0 * s + ( a * s^2 ) / 2 ": ""},
+                        {" v^2 - v_0^2 = 2 * a * m " : ""},
+                        {" v = v_0 + a * s " : "\\[ v_0 \\] is the starting velocity"},
+                        {" v = a * s ": ""}
+                    ]
+                },
+                {
+                    "title": "Force equation",
+                    "equations" : [
+                        {" F = kg * a " : ""}
+                    ]
+                }, 
+                {
+                    "title": "Torque",
+                    "equations" : [
+                        {" 𝜏 = F * m " : "\\[ m \\] is the length of the moment arm"}
+                    ]
+                },
+                {
+                    "title" : "Friction",
+                    "equations" : [
+                        {" F_f = µ * F_n " : "\\[ F_f \\] is the force at fully developed friction"},
+                        {" µ = tan (α) ": ""}
+                    ]
+                },
+                {
+                    "title": "Newton's law of gravitation",
+                    "equations" : [
+                        {" F = G * ( kg * kg ) / m^2 ": "Each kg is the mass of each object, m is the distance between them"}
+                    ]
+                }
+            ],
+            "variables" : [
+                {
+                    "title" : "SI-units",
+                    "equations" : [
+                        {" s = second " : "time"},
+                        {" m = metre " : "length"},
+                        {" kg = kilogram " : "mass"},
+                        {" A = ampere " : "electric current"},
+                        {" K = kelvin " : "thermodynamic temperature"},
+                        {" mol = mole " : "amount of substance"},
+                        {" cd = candela " : "luminous intensity"}
+        
+                    ]
+                }, 
+                {
+                    "title" : "Derived SI-units",
+                    "equations" : [
+                        {" Hz = 1 / s " : "hertz = frequency"},
+                        {" rad = m / m " : "radian = angle"},
+                        {" sr = m^2/m^2 " : "steradian = solid angle"},
+                        {" N = kg * m / s^2 " : "newton = force, wheight"},
+                        {" Pa = N / m^2 " : "pascal = pressure, stress"},
+                        {" J = m * N " : "joule = energy, work, heat"},
+                        {" W = J / s " : "watt = power, radiant, flux"},
+                        {" C = s * A " : "coulomb = electric charge, quantity of electricity"}
+                        
+                    ]
+                }
             ]
         }
     ]
