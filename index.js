@@ -329,7 +329,7 @@ function input(text) {
     let words = text.split(/[\s]+/)
     words.forEach(word => {
         if (word == "") return
-        // Words not in search_variables are counted as categorys 
+        // Words not in search_variables are counted as categories 
         restriction = search_variables.indexOf(word) === -1 ? "category" : "formula";
         restrictions[restriction].push(word)            
     });

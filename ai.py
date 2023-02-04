@@ -21,7 +21,9 @@ def main():
         formulas = []
 
         # Load data 
-        for category in data["category"]["formulas"]:
+        for category in data["category"]:
+            if category["title"] == "Variables" or category["title"] == "Constants":
+                continue
             for equation in category["equations"]:
                 formula = list(equation.keys())[0]
                 formulas.append(formula)
