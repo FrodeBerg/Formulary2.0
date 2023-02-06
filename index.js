@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Variables
 let right_shift = 20;
+let variable_offset = 80;
 
 // Restrictions filled with regex patterns for category, formula, variable 
 let restrictions = {
@@ -16,6 +17,7 @@ let original_data = null;
 let descriptions = {};
 let ai_data = null;
 let search_variables = [];
+let unit_variables = [];
 
 
 function get_data() {
@@ -52,7 +54,7 @@ function get_categories() {
     // Loop through every category
     Object.values(original_data.category).forEach(category => {
         category.forEach(equation => {
-            append_category(equation)
+            append_category(equation);
         })
     });
     if (categories.innerHTML == ""){
@@ -75,8 +77,12 @@ function get_categories() {
 }
 
 
-// Gets left and right variables for each function
+// Takes formula Returns left, right variables
 function get_variables(variables){
+
+    if (typeof variables == "string") {
+        variables = variables.split(" ")
+    }
 
     equal = variables.indexOf("=")
     if (equal == -1) return null
@@ -84,7 +90,7 @@ function get_variables(variables){
     left = []
     right = []
     for (let i = 0; i < variables.length; i++){
-        if (i == "=" || i == "&") continue
+        if (i == "=" || variables[i] == "") continue
         if (i < equal){
             left.push(variables[i]);
         }
@@ -150,6 +156,8 @@ function combined_formula(left, right){
             if (descriptions.hasOwnProperty(formula)){
                 description.innerHTML = descriptions[formula];
             }
+            li.setAttribute("onmouseenter", `show_variables("${formula}", this)`)
+            li.setAttribute("onmouseleave", "hide_variables()")
             ul.append(li, description);
             div.append(ul);
 
@@ -165,6 +173,8 @@ function combined_formula(left, right){
         // Append combined formula
         h3 = document.createElement("h3");
         h3.innerHTML = mathjax_formula(combined);
+        h3.setAttribute("onmouseenter", `show_variables("${formula}", this)`);
+        h3.setAttribute("onmouseleave", "hide_variables()");
         hr = document.createElement("hr")
         if (i <= 2) div.innerHTML = "";
         div.prepend(hr, h3)
@@ -192,14 +202,17 @@ function append_category(category) {
     let formula_exsits = false
     // Formula and description for each equation and si-equation
     category.equations.forEach(equation => {
-        if (!check_formula(Object.keys(equation)[0])) return
+        let current_formula = Object.keys(equation)[0];
+        if (!check_formula(current_formula)) return
 
         formula_exsits = true
         ul = document.createElement("ul");
 
         // Formula 
         formula = document.createElement("li");
-        formula.innerHTML =  mathjax_formula(Object.keys(equation)[0]);
+        formula.innerHTML =  mathjax_formula(current_formula);
+        formula.setAttribute("onmouseenter", `show_variables("${current_formula}", this)`);
+        formula.setAttribute("onmouseleave", "hide_variables()");
         ul.append(formula)
 
         // Description
@@ -315,6 +328,38 @@ function find_braces(formula, div, direction){
         i += 1 * direction;
     }
     return i
+}
+ 
+// Find variables, show variables 
+function show_variables(formula, element){
+    let variable_div = document.getElementById("variables");
+    variable_div.style.display = "block";
+
+    // Get variables 
+    let variables = get_variables(formula);
+    console.log(variables)
+
+
+    // Displayed variables 
+    variable_div.innerHTML = formula
+
+    // Hide if scroll 
+    onscroll = function(){
+        hide_variables();
+    }
+
+    // Updates position of variables 
+    onmousemove = function(window){
+        var y = window.clientY;
+        variable_div.style.top = `${y}px`
+        variable_div.style.left = `${element.offsetWidth + variable_offset}px`;
+    }
+}
+
+// Hide variables on mouse exit
+function hide_variables(){
+    let variable_div = document.getElementById("variables");
+    variable_div.style.display = "none";
 }
 
 // Function that understands what user types in 
