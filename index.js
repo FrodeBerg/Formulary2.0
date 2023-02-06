@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Variables
 let right_shift = 20;
-let variable_offset = 80;
+let variable_offset = 20;
 
 // Restrictions filled with regex patterns for category, formula, variable 
 let restrictions = {
@@ -55,7 +55,7 @@ function get_categories() {
     Object.values(original_data.category).forEach(category => {
         category.forEach(equation => {
             append_category(equation);
-        })
+        });
     });
     if (categories.innerHTML == ""){
         let variables = null;
@@ -73,7 +73,6 @@ function get_categories() {
         }
         if (!successful) help.style.display = "block";
     }
-    
 }
 
 
@@ -173,7 +172,7 @@ function combined_formula(left, right){
         // Append combined formula
         h3 = document.createElement("h3");
         h3.innerHTML = mathjax_formula(combined);
-        h3.setAttribute("onmouseenter", `show_variables("${formula}", this)`);
+        h3.setAttribute("onmouseenter", `show_variables("${combined}", this)`);
         h3.setAttribute("onmouseleave", "hide_variables()");
         hr = document.createElement("hr")
         if (i <= 2) div.innerHTML = "";
@@ -335,13 +334,21 @@ function show_variables(formula, element){
     let variable_div = document.getElementById("variables");
     variable_div.style.display = "block";
 
-    // Get variables 
+    // Append the right variables 
     let variables = get_variables(formula);
-    console.log(variables)
-
-
-    // Displayed variables 
-    variable_div.innerHTML = formula
+    variables = variables[0] + variables[1]
+    original_data.category.variables.forEach(category => {
+        category.equations.forEach(equation => {
+            formula = Object.keys(equation)[0];
+            let variable = (formula.slice(0, formula.indexOf("=")));
+            variable = variable.replace(/\s+/g, '')
+            if (variables.indexOf(variable) != -1) {
+                p = document.createElement("p");
+                p.innerHTML = formula;
+                variable_div.append(p);
+            }
+        });
+    });
 
     // Hide if scroll 
     onscroll = function(){
@@ -351,8 +358,8 @@ function show_variables(formula, element){
     // Updates position of variables 
     onmousemove = function(window){
         var y = window.clientY;
-        variable_div.style.top = `${y}px`
-        variable_div.style.left = `${element.offsetWidth + variable_offset}px`;
+        variable_div.style.top = `${y - variable_div.offsetHeight / 2}px`;
+        variable_div.style.left = `${element.children[0].offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
     }
 }
 
@@ -360,6 +367,7 @@ function show_variables(formula, element){
 function hide_variables(){
     let variable_div = document.getElementById("variables");
     variable_div.style.display = "none";
+    variable_div.innerHTML = "";
 }
 
 // Function that understands what user types in 
