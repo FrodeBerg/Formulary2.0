@@ -84,6 +84,7 @@ function get_categories() {
         }
         if (!successful) help.style.display = "block";
     }
+    MathJax.typeset();
 }
 
 
@@ -405,7 +406,6 @@ function input(text) {
     categories.innerHTML = "Searching for categories: " + restrictions["category"].join(" ");
 
     get_categories()
-    MathJax.typeset();
 }
 
 
