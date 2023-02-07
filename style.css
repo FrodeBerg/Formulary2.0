@@ -64,6 +64,10 @@ li {
     margin: 3px;
 }
 
+p {
+    margin: 5px;
+}
+
 li * {
     margin: 0 !important;
     margin-right: 3px !important;

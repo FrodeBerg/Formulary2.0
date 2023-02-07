@@ -170,13 +170,15 @@ function combined_formula(left, right){
         })
 
         // Append combined formula
-        h3 = document.createElement("h3");
-        h3.innerHTML = mathjax_formula(combined);
-        h3.setAttribute("onmouseenter", `show_variables("${combined}", this)`);
-        h3.setAttribute("onmouseleave", "hide_variables()");
-        hr = document.createElement("hr")
+        let final_formula = document.createElement("li");
+        final_formula.innerHTML = mathjax_formula(combined);
+        final_formula.setAttribute("onmouseenter", `show_variables("${combined}", this)`);
+        final_formula.setAttribute("onmouseleave", "hide_variables()");
+        final_formula.style.fontSize = "20px";
+        final_formula.style.marginTop = "20px";
+        hr = document.createElement("hr");
         if (i <= 2) div.innerHTML = "";
-        div.prepend(hr, h3)
+        div.prepend(hr, final_formula)
         nav.append(div)
     })
     return true
@@ -356,11 +358,8 @@ function show_variables(formula, element){
     }
 
     // Updates position of variables 
-    onmousemove = function(window){
-        var y = window.clientY;
-        variable_div.style.top = `${y - variable_div.offsetHeight / 2}px`;
-        variable_div.style.left = `${element.children[0].offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
-    }
+    variable_div.style.top = `${element.getBoundingClientRect().top - (variable_div.offsetHeight - element.children[0].offsetHeight) / 2}px`;
+    variable_div.style.left = `${element.children[0].offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
 }
 
 // Hide variables on mouse exit
