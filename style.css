@@ -86,3 +86,29 @@ h3 * {
     display: none;
     position: fixed;
 }
+
+#helpers {
+    display: none;
+    border: none;
+    top: 60px;
+}
+
+#info {
+    position: fixed;
+    z-index: 9;
+    background-color: var(--backgroundcolor);
+    border: solid var(--textcolor) 1px;
+    font-size: 18px;
+    top: 70px;
+}
+
+#info::after {
+    content: "";
+    position: absolute;
+    top: -35%;
+    left: 23%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent var(--textcolor) transparent;
+}

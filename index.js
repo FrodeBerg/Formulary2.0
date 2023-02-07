@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     get_data();
 })
 
+// Cover user interaction
+document.onclick = function() {
+    document.getElementById("helpers").style.display = "inline";
+    document.getElementById("info").style.display = "none";
+}
+document.onkeydown = function() {
+    document.getElementById("helpers").style.display = "inline";
+    document.getElementById("info").style.display = "none";
+}
+
+
 // Variables
 let right_shift = 20;
 let variable_offset = 20;
