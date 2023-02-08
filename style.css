@@ -137,6 +137,11 @@ h3 * {
     }
 
     input {
-        max-width: 100px;
+        margin-left: 20px;
+        max-width: 120px;
+    }
+
+    #info::after {
+        left: 11%;
     }
 }

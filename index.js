@@ -399,7 +399,7 @@ function show_variables(formula, element){
             }
         });
     });
-
+    if (variable_div.innerHTML == "") return;
     // Hide if scroll or button down
     onscroll = () => hide_variables();
     
