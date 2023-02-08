@@ -1,17 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     get_data();
+    document.getElementById("info").style.opacity = "1";
 })
 
 // Cover user interaction
+function first_interaction() {
+    let info = document.getElementById("info");
+    let helpers = document.getElementById("helpers")
+    // Fade
+    info.style.opacity = "0";
+    helpers.style.opacity = "1";
+    helpers.style.display = "inline";
+
+    info.addEventListener("transitionend", () => {
+        document.getElementById("info").style.display = "none";
+    })    
+}
 document.onclick = function() {
-    document.getElementById("helpers").style.display = "inline";
-    document.getElementById("info").style.display = "none";
+    first_interaction();
 }
 document.onkeydown = function() {
-    document.getElementById("helpers").style.display = "inline";
-    document.getElementById("info").style.display = "none";
+    first_interaction();
 }
-
 
 // Variables
 let right_shift = 20;
