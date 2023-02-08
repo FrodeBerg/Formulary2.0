@@ -28,7 +28,7 @@ def main():
                 for new_formula in convert_formula(formula, []):
                     if new_formula not in formulas:
                         formulas.append(new_formula)
-        formulas = exclude_formula(formulas)
+        formulas = format_formulas(formulas)
 
         # Every formula is a key for its left and right side 
         for formula in formulas:
@@ -56,8 +56,8 @@ def main():
         json.dump(paths, outfile, indent=4)
 
 
-# Exclude formulas with more than one left side varaible 
-def exclude_formula(formulas):
+# Returns formulas with only one left-side variable
+def format_formulas(formulas):
     new_list = []
     for formula in formulas:
         if len(get_variables(formula)[0]) == 1:
@@ -238,8 +238,6 @@ def find_formula(result, available_variables, formulas = []):
 
             for variable in new_variables:
                 find_formula(result, available_variables + new_variables, formulas + [formula])
-
-
 
 
 if __name__ == "__main__":
