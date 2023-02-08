@@ -93,6 +93,7 @@ h3 * {
     background-color: var(--backgroundcolor);
     border: solid var(--textcolor) 1px;
     position: fixed;
+    z-index: 3;
 }
 
 #helpers {
@@ -107,7 +108,7 @@ h3 * {
     transition: opacity 0.3s ease-out;
     opacity: 0;
     position: fixed;
-    z-index: 9;
+    z-index: 3;
     background-color: var(--backgroundcolor);
     border: solid var(--textcolor) 1px;
     font-size: 18px;
@@ -123,4 +124,19 @@ h3 * {
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent var(--textcolor) transparent;
+}
+
+@media (max-width: 1000px){
+
+    body {
+        font-size: 16px;
+    }
+
+    ul {
+        padding-left: 5px;
+    }
+
+    input {
+        max-width: 100px;
+    }
 }
