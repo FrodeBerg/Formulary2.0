@@ -84,6 +84,8 @@ h3 * {
 
 #variables {
     display: none;
+    background-color: var(--backgroundcolor);
+    border: solid var(--textcolor) 1px;
     position: fixed;
 }
 
