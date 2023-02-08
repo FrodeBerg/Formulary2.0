@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("info").style.opacity = "1";
 })
 
-// Cover user interaction
+// Detect first user interaction to tutorial message
 function first_interaction() {
     let info = document.getElementById("info");
     let helpers = document.getElementById("helpers")
@@ -32,13 +32,15 @@ let restrictions = {
 }
 
 // Original data containging all formulas, categories, and descriptions
-let original_data = null;
+let original_data = [];
 let descriptions = {};
 let ai_data = null;
 let search_variables = [];
 let unit_variables = [];
 
 
+
+// ---------- Data extraction functions ----------
 function get_data() {
     fetch("https://frodeberg.github.io/Formulary2.0/ai.json")
     .then(Response => Response.json())
@@ -48,21 +50,28 @@ function get_data() {
     fetch("https://frodeberg.github.io/Formulary2.0/data.json")
     .then(Response => Response.json())
     .then(data => {
-        original_data = data;
-        // Find every variable in every formula 
-        original_data.category.formulas.forEach(category => {
+        Object.values(data.category).forEach(category => {
+            original_data = original_data.concat(category);
+        })
+        original_data.forEach(category => {
             category.equations.forEach(equation => {
-                variables = Object.keys(equation)[0].split(" ")
-                variables.forEach(variable => {
-                    if (search_variables.indexOf(variable) !== -1) return;
-                    search_variables.push(variable)
-                });
+                let formula = Object.keys(equation)[0];
+                for (let i = 0; i < formula.length; i++){
+                    let variable = formula[i];
+                    if (search_variables.indexOf(variable) !== -1) continue;
+                    if (variable == " " || variable == "") continue;
+                    search_variables.push(variable)                       
+                }
             });
         });
+        unit_variables = data.category.variables;
         get_categories();
     });
 }
 
+
+
+// ---------- HTML generating functions ----------
 
 function get_categories() {
     // Reset main page
@@ -71,13 +80,13 @@ function get_categories() {
     categories = document.getElementById("categories");
     categories.innerHTML = "";
     // Loop through every category
-    Object.values(original_data.category).forEach(category => {
-        category.forEach(equation => {
-            append_category(equation);
-        });
+    original_data.forEach(category => {
+        append_category(category);
     });
     if (categories.innerHTML == ""){
+
         let variables = null;
+
         if (restrictions["formula"].length > 0){
             variables = get_variables(restrictions["formula"]);
         }
@@ -90,62 +99,40 @@ function get_categories() {
                 if (combined_formula(variables[0], combination)) successful = true
             })
         }
+        // If no combined formula show help display
         if (!successful) help.style.display = "block";
     }
     MathJax.typeset();
 }
 
+// Adds each category 
+function append_category(category) {
 
-// Takes formula Returns left, right variables
-function get_variables(variables){
+    if (!check_category(category)) return
+    
+    // Categories tab   
+    let nav = document.getElementById("categories")
+    let div = document.createElement("div")
 
-    if (typeof variables == "string") {
-        variables = variables.split(" ")
-    }
+    // Title and hr for each category 
+    hr = document.createElement("hr")
+    h4 = document.createElement("h4");
+    h4.innerHTML = category.title;
+    div.append(hr, h4)
 
-    equal = variables.indexOf("=")
-    if (equal == -1) return null
+    let formula_exsits = false
+    // Formula and description for each equation and si-equation
+    category.equations.forEach(equation => {
+        let current_formula = Object.keys(equation)[0];
+        if (!check_formula(current_formula)) return
 
-    left = []
-    right = []
-    for (let i = 0; i < variables.length; i++){
-        if (i == "=" || variables[i] == "") continue
-        if (i < equal){
-            left.push(variables[i]);
-        }
-        if (i > equal){
-            right.push(variables[i]);
-        }
-    }
-    if (left.length == 0 || right.length == 0) return null
-
-    return [left, right]
+        formula_exsits = true
+        append_formula(current_formula, div)
+    });
+    if (formula_exsits) nav.append(div);
 }
 
-
-// Returns all combinations of how variables can be combined
-function get_combinations(variables){
-
-    let combinations = [];
-    let length = variables.length;
-    let combinations_length = 2 ** length;
-
-    // Loops through each possible combination
-    for (let i = 0; i < combinations_length; i++){
-        pair = [];
-        for (let j = 0; j < length; j++){
-            if (i & 2 ** j) pair.push(variables[j]);
-        }
-
-        if (pair.length > 0) {
-            combinations.push(pair);           
-        } 
-    }
-    return combinations;
-}
-
-
-// Combined formulas and adds them to DOM 
+// Combines formulas and adds them to DOM 
 function combined_formula(left, right){
 
     key = right.sort().join(",").toString();
@@ -204,95 +191,76 @@ function combined_formula(left, right){
     return true
 }
 
+// Adds description and formula
+function append_formula(formula, div) {
 
-// Adds each category 
-function append_category(category) {
+    ul = document.createElement("ul");
 
-    if (!check_category(category)) return
-    
-    // Categories tab   
-    nav = document.getElementById("categories")
-    div = document.createElement("div")
+    // Formula 
+    equation = document.createElement("li");
+    equation.innerHTML =  mathjax_formula(formula);
+    equation.setAttribute("onmouseenter", `show_variables("${formula}", this)`);
+    equation.setAttribute("onmouseleave", "hide_variables()");
+    ul.append(equation);
 
-    // Title and hr for each category 
-    hr = document.createElement("hr")
-    h4 = document.createElement("h4");
-    h4.innerHTML = category.title;
-    div.append(hr, h4)
-
-    let formula_exsits = false
-    // Formula and description for each equation and si-equation
-    category.equations.forEach(equation => {
-        let current_formula = Object.keys(equation)[0];
-        if (!check_formula(current_formula)) return
-
-        formula_exsits = true
-        ul = document.createElement("ul");
-
-        // Formula 
-        formula = document.createElement("li");
-        formula.innerHTML =  mathjax_formula(current_formula);
-        formula.setAttribute("onmouseenter", `show_variables("${current_formula}", this)`);
-        formula.setAttribute("onmouseleave", "hide_variables()");
-        ul.append(formula)
-
-        // Description
-        description = document.createElement("li")
-        description.innerHTML = Object.values(equation)
-        descriptions[Object.keys(equation)[0]] = Object.values(equation)
-        ul.append(description)
-        div.append(ul)
-    });
-    if (formula_exsits) nav.append(div);
+    // Description
+    description = document.createElement("li")
+    description.innerHTML = Object.values(equation)
+    descriptions[Object.keys(equation)[0]] = Object.values(equation)
+    ul.append(description)
+    div.append(ul)
 }
 
 
-// Check every category to see if it exsists in restrictions 
-function check_category(category) {
 
-    let exsists = false
-    if (restrictions["category"].length == 0) {
-        return true
-    }
-    restrictions["category"].forEach(word => {
-        title = category.title.toLowerCase();
-        word = word.toLowerCase();
-        if (title.includes(word)) exsists = true;
-    });
+// ---------- Helper Functions ----------
 
-    return exsists
-}
+// Returns all combinations of how variables can be combined
+function get_combinations(variables){
 
+    let combinations = [];
+    let length = variables.length;
+    let combinations_length = 2 ** length;
 
-// Check formula to see if it matches restrictions using regex 
-function check_formula(formula) {
-    let reg = "";
-    let restriction = restrictions["formula"];
-    // Check if user typed somthing
-    if (restriction.length !== 0){
-        let equal = restriction.indexOf("=");
-
-        // if equals sign, split into left and right and add to regex
-        if (equal == -1){
-            reg = get_permutations(restriction.slice()).join("|").toString();
+    // Loops through each possible combination
+    for (let i = 0; i < combinations_length; i++){
+        pair = [];
+        for (let j = 0; j < length; j++){
+            if (i & 2 ** j) pair.push(variables[j]);
         }
-        else{
 
-            // Makes regex order insensetive before and after "=" sign
-            let left = get_permutations(restriction.slice(0, equal));
-            if (left) left = "(" + left.join("|").toString() + ")";
-            else left = "";
-            let right = get_permutations(restriction.slice(equal + 1));
-            if (right) right = "(" + right.join("|").toString() + ")";
-            else right = "";
-            
-            reg = `${left}=${right}`
+        if (pair.length > 0) {
+            combinations.push(pair);           
+        } 
+    }
+    return combinations;
+}
+
+// Takes formula Returns left, right variables
+function get_variables(variables){
+
+    if (typeof variables == "string") {
+        variables = variables.split(" ")
+    }
+
+    equal = variables.indexOf("=")
+    if (equal == -1) return null
+
+    left = []
+    right = []
+    for (let i = 0; i < variables.length; i++){
+        if (i == "=" || variables[i] == "") continue
+        if (i < equal){
+            left.push(variables[i]);
+        }
+        if (i > equal){
+            right.push(variables[i]);
         }
     }
-    reg = new RegExp(reg);
-    return (reg.test(formula));
-}
+    if (left.length == 0 || right.length == 0) return null
 
+    return [left, right]
+}
 
 // All permutations of an array 
 function get_permutations(aviable_variables, str = "", permutations = []){
@@ -350,7 +318,66 @@ function find_braces(formula, div, direction){
     }
     return i
 }
- 
+
+// Add spaces to prevent bugs if user didnt put spaces 
+function add_spaces(text, char){
+    let equal = text.indexOf(char);
+    if (equal !== -1){
+        text = text.substring(0, equal) + " " + text[equal] + " " + text.substring(equal + 1, text.length);
+    } 
+    return text
+}
+
+// ---------- Restriction functions ----------
+// Check every category to see if it exsists in restrictions 
+function check_category(category) {
+
+    let exsists = false
+    if (restrictions["category"].length == 0) {
+        return true
+    }
+    restrictions["category"].forEach(word => {
+        title = category.title.toLowerCase();
+        word = word.toLowerCase();
+        if (title.includes(word)) exsists = true;
+    });
+
+    return exsists
+}
+
+// Check formula to see if it matches restrictions using regex 
+function check_formula(formula) {
+    let reg = "";
+    let restriction = restrictions["formula"];
+    // Check if user typed somthing
+    if (restriction.length !== 0){
+        let equal = restriction.indexOf("=");
+
+        // if equals sign, split into left and right and add to regex
+        if (equal == -1){
+            reg = get_permutations(restriction.slice()).join("|").toString();
+        }
+        else{
+
+            // Makes regex order insensetive before and after "=" sign
+            let left = get_permutations(restriction.slice(0, equal));
+            if (left) left = "(" + left.join("|").toString() + ")";
+            else left = "";
+            let right = get_permutations(restriction.slice(equal + 1));
+            if (right) right = "(" + right.join("|").toString() + ")";
+            else right = "";
+            
+            reg = `${left}=${right}`
+        }
+    }
+    reg = new RegExp(reg);
+    return (reg.test(formula));
+}
+
+
+
+// ---------- Show and Hide functions ----------
+
 // Find variables, show variables 
 function show_variables(formula, element){
     let variable_div = document.getElementById("variables");
@@ -359,7 +386,7 @@ function show_variables(formula, element){
     // Append the right variables 
     let variables = get_variables(formula);
     variables = variables[0] + variables[1]
-    original_data.category.variables.forEach(category => {
+    unit_variables.forEach(category => {
         category.equations.forEach(equation => {
             formula = Object.keys(equation)[0];
             let variable = (formula.slice(0, formula.indexOf("=")));
@@ -391,6 +418,9 @@ function hide_variables(){
     previous_variables.style.left = "0px";
 }
 
+
+
+// ---------- Input ----------
 // Function that understands what user types in 
 function input(text) {
 
@@ -420,11 +450,3 @@ function input(text) {
 }
 
 
-// Add spaces to prevent bugs if user didnt put spaces 
-function add_spaces(text, char){
-    let equal = text.indexOf(char);
-    if (equal !== -1){
-        text = text.substring(0, equal) + " " + text[equal] + " " + text.substring(equal + 1, text.length);
-    } 
-    return text
-}
