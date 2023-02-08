@@ -10,6 +10,7 @@ body {
 
 .header {
     position: fixed;
+    z-index: 2;
     top: 20px;
     margin-top: 0;
     border-bottom: solid #FBFFFE 1px;
@@ -47,6 +48,7 @@ ul {
 
 .fade {
     position: fixed;
+    z-index: 1;
     top: 0px;
     width: 90%;
     height: 90px;
@@ -60,8 +62,12 @@ h3 {
 
 li {
     display: flex;
+    position: relative;
+    left: 0;
+    transition: all 0.1s;
     max-width: 40%;
     margin: 3px;
+    z-index: 0;
 }
 
 p {

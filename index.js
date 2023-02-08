@@ -16,16 +16,14 @@ function first_interaction() {
         document.getElementById("info").style.display = "none";
     })    
 }
-document.onclick = function() {
-    first_interaction();
-}
-document.onkeydown = function() {
-    first_interaction();
-}
+document.onclick = () => first_interaction();
+document.onkeydown = () => first_interaction();
+
 
 // Variables
 let right_shift = 20;
-let variable_offset = 20;
+let variable_offset = 30;
+let previous_variables = null;
 
 // Restrictions filled with regex patterns for category, formula, variable 
 let restrictions = {
@@ -374,14 +372,15 @@ function show_variables(formula, element){
         });
     });
 
-    // Hide if scroll 
-    onscroll = function(){
-        hide_variables();
-    }
+    // Hide if scroll or button down
+    onscroll = () => hide_variables();
+    
 
     // Updates position of variables 
     variable_div.style.top = `${element.getBoundingClientRect().top - (variable_div.offsetHeight - element.children[0].offsetHeight) / 2}px`;
     variable_div.style.left = `${element.children[0].offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
+    element.style.left = "10px";
+    previous_variables = element;
 }
 
 // Hide variables on mouse exit
@@ -389,6 +388,7 @@ function hide_variables(){
     let variable_div = document.getElementById("variables");
     variable_div.style.display = "none";
     variable_div.innerHTML = "";
+    previous_variables.style.left = "0px";
 }
 
 // Function that understands what user types in 
@@ -416,6 +416,7 @@ function input(text) {
     categories.innerHTML = "Searching for categories: " + restrictions["category"].join(" ");
 
     get_categories()
+    hide_variables();
 }
 
 
