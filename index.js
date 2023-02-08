@@ -56,12 +56,10 @@ function get_data() {
         original_data.forEach(category => {
             category.equations.forEach(equation => {
                 let formula = Object.keys(equation)[0];
-                for (let i = 0; i < formula.length; i++){
-                    let variable = formula[i];
-                    if (search_variables.indexOf(variable) !== -1) continue;
-                    if (variable == " " || variable == "") continue;
-                    search_variables.push(variable)                       
-                }
+                (formula.split(" ")).forEach(variable => {
+                    if (search_variables.indexOf(variable) !== -1) return;
+                    search_variables.push(variable)   
+                });
             });
         });
         unit_variables = data.category.variables;
@@ -123,11 +121,13 @@ function append_category(category) {
     let formula_exsits = false
     // Formula and description for each equation and si-equation
     category.equations.forEach(equation => {
-        let current_formula = Object.keys(equation)[0];
-        if (!check_formula(current_formula)) return
+        let formula = Object.keys(equation)[0];
+        if (!check_formula(formula)) return
 
         formula_exsits = true
-        append_formula(current_formula, div)
+
+        descriptions[Object.keys(equation)[0]] = Object.values(equation)
+        append_formula(formula, div)
     });
     if (formula_exsits) nav.append(div);
 }
@@ -142,30 +142,21 @@ function combined_formula(left, right){
 
     nav = document.getElementById("categories")
 
-    // Loop through each formula for given key 
-    ai_data[left][right].forEach(equation => {
+    // Loop through each list of formulas for given key 
+    ai_data[left][right].forEach(list => {
 
         div = document.createElement("div")
 
         combined = null;
         i = 1;
 
-        equation.slice().reverse().forEach(formula => {
+        list.slice().reverse().forEach(formula => {
         
-            // Add each formula and description to ul
-            ul = document.createElement("ul");
-            li = document.createElement("li");
-            li.innerHTML = mathjax_formula(formula);
-            li.style.marginLeft = `${i * right_shift}px` 
-            description = document.createElement("li");
-            description.innerHTML = "";
-            if (descriptions.hasOwnProperty(formula)){
-                description.innerHTML = descriptions[formula];
-            }
-            li.setAttribute("onmouseenter", `show_variables("${formula}", this)`)
-            li.setAttribute("onmouseleave", "hide_variables()")
-            ul.append(li, description);
-            div.append(ul);
+            // Add each formula
+            append_formula(formula, div)
+
+            // Right shift for style 
+            div.lastChild.children[0].style.marginLeft = `${i * right_shift}px`
 
             // Combined formula
             if (combined){
@@ -177,17 +168,15 @@ function combined_formula(left, right){
         })
 
         // Append combined formula
-        let final_formula = document.createElement("li");
-        final_formula.innerHTML = mathjax_formula(combined);
-        final_formula.setAttribute("onmouseenter", `show_variables("${combined}", this)`);
-        final_formula.setAttribute("onmouseleave", "hide_variables()");
-        final_formula.style.fontSize = "20px";
-        final_formula.style.marginTop = "20px";
+        let equation = append_equation(combined);
+
+        equation.style.fontSize = "20px";
+        equation.style.marginTop = "20px";
         hr = document.createElement("hr");
         if (i <= 2) div.innerHTML = "";
-        div.prepend(hr, final_formula)
+        div.prepend(hr, equation)
         nav.append(div)
-    })
+    });
     return true
 }
 
@@ -197,18 +186,28 @@ function append_formula(formula, div) {
     ul = document.createElement("ul");
 
     // Formula 
-    equation = document.createElement("li");
-    equation.innerHTML =  mathjax_formula(formula);
-    equation.setAttribute("onmouseenter", `show_variables("${formula}", this)`);
-    equation.setAttribute("onmouseleave", "hide_variables()");
+    let equation = append_equation(formula);
     ul.append(equation);
 
     // Description
     description = document.createElement("li")
-    description.innerHTML = Object.values(equation)
-    descriptions[Object.keys(equation)[0]] = Object.values(equation)
+    description.innerHTML = "";
+    if (descriptions.hasOwnProperty(formula)){
+        description.innerHTML = descriptions[formula];
+    }    
     ul.append(description)
     div.append(ul)
+}
+
+function append_equation(formula){
+    equation = document.createElement("li");
+
+    equation.innerHTML = mathjax_formula(formula);
+
+    equation.setAttribute("onmouseenter", `show_variables("${formula}", this)`);
+    equation.setAttribute("onmouseleave", "hide_variables()");
+
+    return equation;
 }
 
 
@@ -327,6 +326,8 @@ function add_spaces(text, char){
     } 
     return text
 }
+
+
 
 // ---------- Restriction functions ----------
 // Check every category to see if it exsists in restrictions 
@@ -448,5 +449,3 @@ function input(text) {
     get_categories()
     hide_variables();
 }
-
-
