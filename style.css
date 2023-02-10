@@ -1,6 +1,6 @@
 :root {
-    --backgroundcolor: #747476;
-    --textcolor: #e6d3c1;
+    --backgroundcolor: #283C63;
+    --textcolor: #FBE8D3;
 }
 
 body {
@@ -13,7 +13,7 @@ body {
     z-index: 2;
     top: 20px;
     margin-top: 0;
-    border-bottom: solid #FBFFFE 1px;
+    border-bottom: solid var(--textcolor) 1px;
     background-color: var(--backgroundcolor);
 }
 
@@ -36,6 +36,11 @@ input {
     outline: none;
     background-color: var(--backgroundcolor);
     color: var(--textcolor);
+}
+
+hr {
+    border: none;
+    border-bottom: solid var(--textcolor) 1px;
 }
 
 ul {
