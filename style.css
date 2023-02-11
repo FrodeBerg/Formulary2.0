@@ -68,6 +68,7 @@ h3 {
 li {
     display: flex;
     position: relative;
+    align-items: center;
     left: 0;
     transition: all 0.1s;
     max-width: 40%;

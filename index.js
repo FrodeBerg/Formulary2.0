@@ -382,31 +382,33 @@ function check_formula(formula) {
 // Find variables, show variables 
 function show_variables(formula, element){
     let variable_div = document.getElementById("variables");
-    variable_div.style.display = "block";
 
     // Append the right variables 
     let variables = get_variables(formula);
     variables = variables[0] + variables[1]
     unit_variables.forEach(category => {
         category.equations.forEach(equation => {
-            formula = Object.keys(equation)[0];
-            let variable = (formula.slice(0, formula.indexOf("=")));
-            variable = variable.replace(/\s+/g, '')
+            equation = Object.keys(equation)[0];
+            let variable = (equation.slice(0, equation.indexOf("=")));
+            variable = variable.replace(/\s+/g, '');
+            if (equation == formula) return;
             if (variables.indexOf(variable) != -1) {
                 p = document.createElement("p");
-                p.innerHTML = formula;
+                p.innerHTML = equation;
                 variable_div.append(p);
             }
         });
     });
     if (variable_div.innerHTML == "") return;
-    // Hide if scroll or button down
+    variable_div.style.display = "block";
+
+    // Hide if scroll
     onscroll = () => hide_variables();
     
 
     // Updates position of variables 
-    variable_div.style.top = `${element.getBoundingClientRect().top - (variable_div.offsetHeight - element.children[0].offsetHeight) / 2}px`;
-    variable_div.style.left = `${element.children[0].offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
+    variable_div.style.top = `${element.getBoundingClientRect().top - (variable_div.offsetHeight - element.offsetHeight) / 2}px`;
+    variable_div.style.left = `${element.offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
     element.style.left = "10px";
     previous_variables = element;
 }
