@@ -242,7 +242,6 @@ function get_variables(variables){
     if (typeof variables == "string") {
         variables = variables.split(" ")
     }
-
     equal = variables.indexOf("=")
     if (equal == -1) return null
 
@@ -386,7 +385,7 @@ function show_variables(formula, element){
 
     // Append the right variables 
     let variables = get_variables(formula);
-    variables = variables[0] + variables[1]
+    variables = variables[0].concat(variables[1])
     unit_variables.forEach(category => {
         category.equations.forEach(equation => {
             equation = Object.keys(equation)[0];
