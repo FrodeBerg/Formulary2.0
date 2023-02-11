@@ -246,12 +246,18 @@ function get_variables(variables){
     left = []
     right = []
     for (let i = 0; i < variables.length; i++){
-        if (i == "=" || variables[i] == "") continue
+        let variable = variables[i];
+        if (i == "=" || variable == "") continue
+
+        // Include variables with exponents
+        let symbol = variable.indexOf("^");
+        if (symbol != -1) variable = variable.slice(0, symbol);
+
         if (i < equal){
-            left.push(variables[i]);
+            left.push(variable);
         }
         if (i > equal){
-            right.push(variables[i]);
+            right.push(variable);
         }
     }
     if (left.length == 0 || right.length == 0) return null
@@ -386,8 +392,10 @@ function show_variables(formula, element){
     variables = variables[0].concat(variables[1])
     unit_variables.forEach(category => {
         category.equations.forEach(equation => {
+
             equation = Object.keys(equation)[0];
             let variable = (equation.slice(0, equation.indexOf("=")));
+
             variable = variable.replace(/\s+/g, '');
             if (equation == formula) return;
             if (variables.indexOf(variable) != -1) {
