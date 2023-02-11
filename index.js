@@ -16,8 +16,6 @@ function first_interaction() {
         document.getElementById("info").style.display = "none";
     })    
 }
-document.onclick = () => first_interaction();
-document.onkeydown = () => first_interaction();
 
 
 // Variables
@@ -427,6 +425,9 @@ function hide_variables(){
 // ---------- Input ----------
 // Function that understands what user types in 
 function input(text) {
+
+    // hide help message
+    first_interaction();
 
     // Clear previous restrictions
     restrictions["formula"] = []
