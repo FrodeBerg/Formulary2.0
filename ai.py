@@ -37,9 +37,10 @@ def main():
                 result_variables.add(variable)
             for variable in variables[1]:
                 using_variables.add(variable)
-            actions[formula] = variables
+            if len(variables[0]) > 0 and len(variables[1]) > 0:
+                actions[formula] = variables
 
-
+    print(actions)
     result_variables = sorted(list(result_variables))
     using_variables = sorted(list(using_variables))
     j = 0
@@ -60,7 +61,8 @@ def main():
 def format_formulas(formulas):
     new_list = []
     for formula in formulas:
-        if len(get_variables(formula)[0]) == 1:
+        equals = formula.find("=")
+        if len(list(filter(None, formula[:equals].split(" ")))) == 1:
             new_list.append(formula)
     return new_list
 
@@ -168,11 +170,14 @@ def get_variables(formula):
     isleft = True
     for variable in formula.split(" "):
         if variable in ["="]:
-            isleft = False
+            isleft = False 
+        if "_" in variable:
+            continue
         if variable in ["","=", " ", "/", "(", ")", "{", "}", "^", "*", "+", "-", "_", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]:
             continue
         if "^" in variable:
             variable = variable[0: variable.find("^")]
+
         if isleft:
             left.add(variable)
         else:
@@ -229,7 +234,7 @@ def find_formula(result, available_variables, formulas = []):
                 current_formula = formula
                 for previous_formula in formulas[-1::-1]:
                     # If previous result is not in current 
-                    if not all(left in get_variables(current_formula)[1] for left in get_variables(previous_formula)[0]):
+                    if not all(left in actions[current_formula][1] for left in actions[previous_formula][0]):
                         break
                     current_formula = previous_formula
                 else: 
