@@ -83,18 +83,18 @@
                 {
                     "title" : "Derived SI-units",
                     "equations" : [
-                        {" Hz = frequency" : "hertz = \\[ 1 / s \\]"},
-                        {" rad = angle" : "radian = \\[ m / m \\]"},
-                        {" sr = solid angle " : "steradian = \\[ m^2 / m^2 \\]"},
-                        {" N = force, wheight " : "newton = \\[ kg * m / s^2 \\]"},
-                        {" Pa = pressure, stress " : "pascal = \\[ N / m^2 \\]"},
-                        {" J = energy, work, heat " : "joule = \\[ m * N \\]"},
-                        {" W = power, radiant, flux" : "watt = \\[ J / s \\]"},
-                        {" C = electric charge, quantity of electricity " : "coulomb = \\[ s * A \\]"},
-                        {" I = momentum, impulse" : "newton-second = \\[ N * s \\]"},
-                        {" v = metre per second" : "velocity = \\[ m / s \\]"},
-                        {" a = metre per second squared " : "acceleration = \\[ m / s^2 \\]"},
-                        {" V = cubic metre " : "Volume = \\[ m^3 \\]"}
+                        {" Hz = 1 / s " : "hertz = frequency"},
+                        {" rad = m / m " : "radian = angle "},
+                        {" sr = m^2 / m^2 " : "steradian = solid angle"},
+                        {" N = kg * m / s^2 " : "newton = force, wheight"},
+                        {" Pa = N / m^2 " : "pascal = pressure, stress"},
+                        {" J = m * N " : "joule = energy, work, heat "},
+                        {" W = J / s " : "watt = power, radiant, flux"},
+                        {" C = s * A " : "coulomb = electric charge, quantity of electricity"},
+                        {" I = N * s " : "newton-second = momentum, impulse"},
+                        {" v = m / s " : "velocity = metre per second"},
+                        {" a = m / s^2 " : "acceleration = metre per second squared"},
+                        {" V = m^3 " : "Volume = cubic metre"}
                         
                     ]
                 }
