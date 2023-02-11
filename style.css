@@ -6,6 +6,7 @@
 body {
     background-color: var(--backgroundcolor);
     color: var(--textcolor);
+    font-family: "Georgia", serif;
 }
 
 .header {

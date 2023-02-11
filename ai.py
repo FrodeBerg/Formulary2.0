@@ -4,7 +4,7 @@ from itertools import combinations
 
 actions = {}
 paths = {}
-n = 3
+n = 2
 
 result_variables = set()
 using_variables = set()
