@@ -169,12 +169,13 @@ function combined_formula(left, right){
 
         // Append combined formula
         let equation = append_equation(combined);
-
+        ul = document.createElement("ul");
         equation.style.fontSize = "20px";
         equation.style.marginTop = "20px";
         hr = document.createElement("hr");
+        ul.append(equation);
         if (i <= 2) div.innerHTML = "";
-        div.prepend(hr, equation)
+        div.prepend(hr, ul)
         nav.append(div)
     });
     return true
@@ -409,7 +410,7 @@ function show_variables(formula, element){
     // Updates position of variables 
     variable_div.style.top = `${element.getBoundingClientRect().top - (variable_div.offsetHeight - element.offsetHeight) / 2}px`;
     variable_div.style.left = `${element.offsetWidth + variable_offset + element.getBoundingClientRect().left}px`;
-    element.style.left = "10px";
+    element.style.paddingLeft = "10px";
     previous_variables = element;
 }
 
@@ -418,7 +419,7 @@ function hide_variables(){
     let variable_div = document.getElementById("variables");
     variable_div.style.display = "none";
     variable_div.innerHTML = "";
-    previous_variables.style.left = "0px";
+    previous_variables.style.paddingLeft = "0px";
 }
 
 
