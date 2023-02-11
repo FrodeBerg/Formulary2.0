@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     get_data();
-    document.querySelector("input").focus();
     document.getElementById("info").style.opacity = "1";
 })
 
