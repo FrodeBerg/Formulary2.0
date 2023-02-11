@@ -415,6 +415,7 @@ function show_variables(formula, element){
 
 // Hide variables on mouse exit
 function hide_variables(){
+    if (previous_variables == null) return;
     let variable_div = document.getElementById("variables");
     variable_div.style.display = "none";
     variable_div.innerHTML = "";
