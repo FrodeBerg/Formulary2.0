@@ -40,12 +40,12 @@ let unit_variables = [];
 
 // ---------- Data extraction functions ----------
 function get_data() {
-    fetch("https://formulary.link/ai.json")
+    fetch("https://frodeberg.github.io/Formulary2.0/ai.json")
     .then(Response => Response.json())
     .then(data => {
         ai_data = data;
     })
-    fetch("https://formulary.link/data.json")
+    fetch("https://frodeberg.github.io/Formulary2.0/data.json")
     .then(Response => Response.json())
     .then(data => {
         Object.values(data.category).forEach(category => {
